@@ -335,6 +335,45 @@ img,video{max-width:100%;height:auto;}
   .number-value{font-size:1.9rem;}
   .number-label{font-size:8.5px;letter-spacing:.1em;}
 }
+
+/* Badge Em captação */
+.badge-cap{background:rgba(201,169,110,.12);color:#c9a96e;border:1px solid rgba(201,169,110,.35);}
+
+/* Card de produto SensoryShield */
+.ss-product-card{
+  position:relative;
+  width:200px;
+  height:433px;
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 16px 40px rgba(0,0,0,.45);
+  background:#0a0a08;
+  border:1px solid rgba(255,255,255,.06);
+  transition:transform .35s cubic-bezier(.2,.7,.2,1);
+  flex-shrink:0;
+}
+.mockup-wrap:hover .ss-product-card{transform:translateY(-6px);}
+.ss-product-card img{
+  width:100%;height:100%;
+  object-fit:cover;
+  object-position:center 15%;
+  display:block;
+}
+.ss-product-overlay{
+  position:absolute;
+  bottom:0;left:0;right:0;
+  padding:16px 14px 14px;
+  background:linear-gradient(to top,rgba(10,10,8,.92) 50%,transparent);
+  display:flex;align-items:flex-end;
+}
+.ss-product-label{
+  font-family:var(--mono);
+  font-size:8.5px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--accent2);
+}
+
 </style>
 </head>
 <body>
@@ -411,7 +450,7 @@ img,video{max-width:100%;height:auto;}
   <div class="projects-header">
     <div class="section-label" aria-hidden="true">02 / Projetos</div>
     <h2 class="section-title" id="projetos-title">Apps que <em>criei</em>.</h2>
-    <p class="projects-intro">Seis projetos proprietários criados por mim do zero — concepção, design, produto e desenvolvimento. Obra Certa disponível por assinatura; Neuro Lens, Convergir, Oráculo Pessoal, BIA e Operação Horizonte com acesso gratuito ou demo.</p>
+    <p class="projects-intro">Sete projetos proprietários criados por mim do zero — concepção, design, produto e desenvolvimento. Obra Certa disponível por assinatura; Neuro Lens, Convergir, Oráculo Pessoal, BIA e Operação Horizonte com acesso gratuito ou demo. SensoryShield em fase de captação.</p>
   </div>
 
   <div class="projects-gallery" role="region" aria-label="Galeria de apps">
@@ -608,6 +647,28 @@ img,video{max-width:100%;height:auto;}
               <div class="device-slide"><img src="assets/horizonte_4.webp" alt="" loading="lazy"/></div>
               <div class="device-slide"><img src="assets/horizonte_5.webp" alt="" loading="lazy"/></div>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 07 SENSORYSHIELD -->
+  <article class="project-item reveal" aria-labelledby="proj7-title">
+    <div>
+      <div class="project-index" aria-hidden="true">07</div>
+      <h3 class="project-title" id="proj7-title">SensoryShield <span class="project-badge badge-cap">Em captação</span></h3>
+      <div class="project-type">Moda · Sensorialidade · Inclusão · Wearable tech</div>
+      <p class="project-desc">Roupas para pessoas com alta sensibilidade sensorial. Duplo capuz bloqueador de luz com visor estendido, almofadas acústicas quilted nas orelhas, fechamento magnético silencioso, mangas extra-longas com thumbholes e costura flatlock sem etiquetas. Proteção sensorial real com estética de luxo. Modal 70% + Microfibra 30%.</p>
+      <div class="project-tags"><span class="tag">Moda sensorial</span><span class="tag">Wearable tech</span><span class="tag">Inclusão</span><span class="tag">Design terapêutico</span><span class="tag">Em captação</span></div>
+      <a href="mailto:jessicatwblock@gmail.com?subject=SensoryShield" class="project-cta">Conversar sobre o projeto ↗</a>
+    </div>
+    <div class="project-mockup" aria-hidden="true">
+      <div class="mockup-wrap">
+        <div class="ss-product-card">
+          <img src="assets/sensoryshield_1.webp" alt="SensoryShield - casaco de proteção sensorial" loading="lazy">
+          <div class="ss-product-overlay">
+            <span class="ss-product-label">✦ Luxury Sensory Protection</span>
           </div>
         </div>
       </div>
