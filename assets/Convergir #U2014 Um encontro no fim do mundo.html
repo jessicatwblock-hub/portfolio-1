@@ -1,0 +1,2087 @@
+<!DOCTYPE html>
+<!-- saved from url=(0046)file:///C:/Users/jessi/Downloads/index_34.html -->
+<html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0F1419">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="author" content="J.B. — JBLK Design">
+<meta name="description" content="Convergir — Um encontro no fim do mundo. Obra original, 2026.">
+<title>Convergir — Um encontro no fim do mundo</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #0F1419; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; color: #F4E8D8; -webkit-font-smoothing: antialiased; }
+  body { height: 100dvh; }
+  #game { position: relative; width: 100vw; height: 100dvh; overflow: hidden; }
+  .scene { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 1.4s ease, visibility 0s linear 1.4s; display: flex; flex-direction: column; align-items: center; justify-content: center; background-size: cover; background-position: center; background-repeat: no-repeat; background-color: #0F1419; }
+  .scene.active { opacity: 1; visibility: visible; pointer-events: auto; transition: opacity 1.4s ease, visibility 0s linear 0s; }
+
+  /* TÍTULO */
+  #scene-title { background-image: linear-gradient(180deg, rgba(15,20,25,0.4) 0%, rgba(15,20,25,0.55) 40%, rgba(15,20,25,0.85) 100%), url('assets/title.png'); justify-content: flex-start; padding-top: 8vh; }
+  .title-content { text-align: center; padding: 32px 28px; max-width: 90%; }
+  #scene-title h1 { font-family: Georgia, serif; font-size: clamp(36px, 9vw, 64px); font-weight: 400; letter-spacing: 0.08em; color: #F4E8D8; margin-bottom: 16px; text-shadow: 0 2px 24px rgba(0,0,0,0.6); }
+  .subtitle { font-size: clamp(10px, 2.6vw, 12px); letter-spacing: 0.4em; color: #F4E8D8; opacity: 0.85; margin-bottom: 8px; text-shadow: 0 1px 8px rgba(0,0,0,0.8); }
+  .divider { width: 60px; height: 1px; background: #F4E8D8; opacity: 0.5; margin: 24px auto; }
+  .phase-label { font-size: clamp(9px, 2.4vw, 11px); letter-spacing: 0.5em; color: #F4E8D8; opacity: 0.75; margin-top: 32px; text-shadow: 0 1px 8px rgba(0,0,0,0.8); }
+  #scene-title .start-button { position: absolute; bottom: 8vh; left: 50%; transform: translateX(-50%); }
+  .start-button { padding: 16px 52px; background: rgba(15, 20, 25, 0.55); border: 0.7px solid rgba(244, 232, 216, 0.85); color: #F4E8D8; font-family: inherit; font-size: clamp(11px, 2.8vw, 13px); letter-spacing: 0.3em; cursor: pointer; transition: all 0.3s ease; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+  .start-button:hover, .start-button:active { background: rgba(244, 232, 216, 0.18); border-color: #F4E8D8; }
+
+  /* CUTSCENES */
+  .cutscene { padding: 24px; justify-content: flex-end; padding-bottom: 14vh; cursor: pointer; }
+  .cutscene-text { width: 100%; max-width: 580px; text-align: center; background: rgba(15, 20, 25, 0.78); padding: 28px 24px; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border: 0.5px solid rgba(244, 232, 216, 0.1); }
+  .cutscene-location { font-size: clamp(9px, 2.4vw, 11px); letter-spacing: 0.4em; opacity: 0.75; margin-bottom: 18px; }
+  .cutscene-narration { font-family: Georgia, serif; font-style: italic; font-size: clamp(15px, 4.2vw, 18px); line-height: 1.65; color: #F4E8D8; opacity: 0.95; }
+  .continue-hint { position: absolute; bottom: 5vh; left: 50%; transform: translateX(-50%); font-size: clamp(9px, 2.4vw, 11px); letter-spacing: 0.3em; opacity: 0.55; animation: blink 2s ease-in-out infinite; cursor: pointer; padding: 12px 24px; z-index: 5; white-space: nowrap; }
+  @keyframes blink { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.8; } }
+
+  #scene-intro-lia { background-image: linear-gradient(180deg, rgba(15,20,25,0.35) 0%, rgba(15,20,25,0.92) 100%), url('assets/lia-uberlandia.png'); }
+  #scene-intro-bento { background-image: linear-gradient(180deg, rgba(15,20,25,0.35) 0%, rgba(15,20,25,0.92) 100%), url('assets/bento-sinop.png'); }
+  #scene-characters { background: linear-gradient(135deg, #5C1A2B 0%, #3D1F4C 50%, #1A2B4C 100%); }
+  #scene-connection { background-image: linear-gradient(180deg, rgba(15,20,25,0.4) 0%, rgba(15,20,25,0.88) 100%), url('assets/connection.png'); }
+  #scene-map { background-image: linear-gradient(180deg, rgba(15,20,25,0.3) 0%, rgba(15,20,25,0.85) 100%), url('assets/map.png'); }
+  #scene-fusos-intro { background-image: linear-gradient(180deg, rgba(15,20,25,0.4) 0%, rgba(15,20,25,0.9) 100%), url('assets/fusos.png'); }
+  #scene-fusos-game { background-image: linear-gradient(180deg, rgba(15,20,25,0.7) 0%, rgba(15,20,25,0.92) 100%), url('assets/fusos.png'); justify-content: center; }
+  #scene-ruido-intro { background-image: linear-gradient(180deg, rgba(15,20,25,0.3) 0%, rgba(15,20,25,0.85) 100%), url('assets/ruido.png'); }
+  #scene-ruido-game { background-image: linear-gradient(180deg, rgba(15,20,25,0.6) 0%, rgba(15,20,25,0.92) 100%), url('assets/ruido.png'); padding: 32px 20px; justify-content: space-between; }
+  #scene-travessia-intro { background-image: linear-gradient(180deg, rgba(15,20,25,0.3) 0%, rgba(15,20,25,0.92) 100%), url('assets/travessia.png'); }
+  #scene-travessia-game { background-image: linear-gradient(180deg, rgba(15,20,25,0.4) 0%, rgba(15,20,25,0.85) 100%), url('assets/travessia.png'); justify-content: space-between; padding: 32px 24px; }
+  #scene-convergencia { background-image: linear-gradient(180deg, rgba(15,20,25,0.25) 0%, rgba(15,20,25,0.7) 100%), url('assets/convergencia.png'); }
+  #scene-encontro-game { background-image: linear-gradient(180deg, rgba(15,20,25,0.3) 0%, rgba(15,20,25,0.78) 100%), url('assets/encontro.png'); padding: 24px; justify-content: space-between; }
+  #scene-toque { background-image: linear-gradient(180deg, rgba(15,20,25,0.25) 0%, rgba(15,20,25,0.78) 100%), url('assets/toque.png'); }
+  #scene-end { background-image: linear-gradient(180deg, rgba(15,20,25,0.3) 0%, rgba(15,20,25,0.78) 100%), url('assets/end.png'); }
+
+  /* PERSONAGENS */
+  #scene-characters { padding: 32px 20px; justify-content: center; }
+  .characters-header { text-align: center; margin-bottom: 24px; }
+  .characters-container { display: flex; gap: 16px; align-items: stretch; justify-content: center; width: 100%; max-width: 900px; }
+  .character-card { flex: 1; text-align: center; background: rgba(15, 20, 25, 0.45); padding: 14px 12px 16px; backdrop-filter: blur(2px); display: flex; flex-direction: column; align-items: center; min-width: 0; }
+  .character-portrait { width: 100%; aspect-ratio: 3/4; background-size: cover; background-position: center top; border: 0.5px solid rgba(244, 232, 216, 0.2); margin-bottom: 14px; }
+  .character-portrait.lia { background-image: url('assets/lia-portrait.png'); }
+  .character-portrait.bento { background-image: url('assets/bento-portrait.png'); }
+  .character-card h3 { font-family: Georgia, serif; font-size: clamp(18px, 4.8vw, 24px); font-weight: 400; margin-bottom: 4px; }
+  .character-card .age-loc { font-size: clamp(8px, 2.2vw, 10px); letter-spacing: 0.25em; opacity: 0.75; margin-bottom: 10px; }
+  .character-card .description { font-family: Georgia, serif; font-style: italic; font-size: clamp(11px, 3vw, 13px); line-height: 1.55; opacity: 0.9; }
+
+  /* FASE 1: SINTONIA */
+  #scene-gameplay { flex-direction: row; padding: 0; }
+  .side { flex: 1; height: 100%; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px 16px; background-size: cover; background-position: center; min-width: 0; }
+  .side-lia { background-image: linear-gradient(180deg, rgba(92, 26, 43, 0.78) 0%, rgba(61, 31, 76, 0.9) 100%), url('assets/lia-night.png'); }
+  .side-bento { background-image: linear-gradient(180deg, rgba(26, 43, 76, 0.78) 0%, rgba(42, 74, 61, 0.9) 100%), url('assets/bento-dawn.png'); }
+  .side-divider { width: 1px; height: 100%; background: rgba(244, 232, 216, 0.25); z-index: 3; }
+  .character-label { font-size: clamp(9px, 2.4vw, 11px); letter-spacing: 0.4em; opacity: 0.85; margin-bottom: 4px; }
+  .character-name { font-family: Georgia, serif; font-size: clamp(18px, 4.8vw, 24px); margin-bottom: 4px; }
+  .character-location { font-size: clamp(8px, 2vw, 10px); letter-spacing: 0.25em; opacity: 0.65; margin-bottom: 22px; }
+  .radio-dial { width: clamp(120px, 32vw, 180px); aspect-ratio: 1; border-radius: 50%; border: 1px solid rgba(244, 232, 216, 0.5); position: relative; margin: 8px 0; cursor: grab; touch-action: none; background: rgba(15, 20, 25, 0.4); }
+  .radio-dial:active { cursor: grabbing; }
+  .dial-pointer { position: absolute; top: 50%; left: 50%; width: 4px; height: 38%; background: #F4E8D8; transform-origin: center bottom; border-radius: 2px; pointer-events: none; }
+  .dial-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 14px; height: 14px; border-radius: 50%; background: #F4E8D8; pointer-events: none; }
+  .frequency-display { margin-top: 14px; font-family: 'Courier New', monospace; font-size: clamp(12px, 3vw, 15px); letter-spacing: 0.1em; opacity: 0.95; }
+  .signal-strength { margin-top: 16px; width: clamp(100px, 26vw, 180px); height: 4px; background: rgba(244, 232, 216, 0.2); border-radius: 2px; overflow: hidden; }
+  .signal-bar { height: 100%; width: 0%; background: #F4E8D8; transition: width 0.2s ease; }
+  .signal-label { margin-top: 6px; font-size: clamp(8px, 2vw, 10px); letter-spacing: 0.3em; opacity: 0.65; }
+  #tutorial { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(15, 20, 25, 0.96); border: 0.5px solid rgba(244, 232, 216, 0.35); padding: 24px 28px; text-align: center; z-index: 10; width: calc(100% - 40px); max-width: 340px; transition: opacity 0.6s ease; cursor: pointer; }
+  #tutorial p { font-size: clamp(13px, 3.5vw, 14px); line-height: 1.65; margin-bottom: 16px; }
+  #tutorial small { font-size: clamp(9px, 2.4vw, 11px); letter-spacing: 0.3em; opacity: 0.7; }
+  #connection-line { position: absolute; top: 50%; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, #F4E8D8, transparent); opacity: 0; pointer-events: none; z-index: 5; transition: opacity 0.6s ease; box-shadow: 0 0 20px #F4E8D8; }
+  #connection-line.active { opacity: 0.95; animation: pulseConnection 2s ease-in-out infinite; }
+  @keyframes pulseConnection { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
+
+  /* FASE 2: FUSOS (espera + respiração) */
+  .fusos-container { text-align: center; padding: 24px; max-width: 540px; }
+  .fusos-instruction { font-family: Georgia, serif; font-style: italic; font-size: clamp(15px, 4vw, 17px); line-height: 1.7; margin-bottom: 40px; opacity: 0.95; transition: opacity 0.6s ease; }
+  .breath-circle-container { width: clamp(160px, 42vw, 220px); height: clamp(160px, 42vw, 220px); margin: 0 auto 32px; position: relative; display: flex; align-items: center; justify-content: center; }
+  .breath-circle { width: 100%; height: 100%; border-radius: 50%; border: 1px solid rgba(244, 232, 216, 0.4); background: radial-gradient(circle, rgba(244, 232, 216, 0.06) 0%, transparent 70%); transform: scale(0.7); transition: transform 4s cubic-bezier(0.4, 0, 0.6, 1); }
+  .breath-circle.expanding { transform: scale(1); }
+  .breath-text { position: absolute; font-size: clamp(10px, 2.6vw, 12px); letter-spacing: 0.4em; opacity: 0.7; transition: opacity 0.6s ease; }
+  .fusos-counter { font-family: 'Courier New', monospace; font-size: clamp(11px, 2.8vw, 13px); letter-spacing: 0.2em; opacity: 0.5; margin-top: 24px; }
+
+  /* FASE 3: RUÍDO */
+  .ruido-header { text-align: center; margin-top: 20px; }
+  .ruido-instruction { font-family: Georgia, serif; font-style: italic; font-size: clamp(13px, 3.4vw, 15px); line-height: 1.6; opacity: 0.85; margin-bottom: 8px; }
+  .ruido-hint { font-size: clamp(9px, 2.2vw, 11px); letter-spacing: 0.3em; opacity: 0.55; }
+  .ruido-message { font-family: 'Courier New', monospace; font-size: clamp(20px, 5.5vw, 28px); letter-spacing: 0.15em; text-align: center; line-height: 1.8; margin: 32px 0; min-height: 120px; }
+
+  /* MORSE — Fase 3 (tela inteira como chave) */
+  #scene-ruido-game {
+    cursor: pointer;
+    touch-action: none;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  .morse-pulse-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(244, 232, 216, 0.18) 0%, transparent 70%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+    z-index: 10;
+  }
+  #scene-ruido-game.pressing .morse-pulse-overlay {
+    opacity: 1;
+  }
+
+  .morse-counter {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    font-family: 'Courier New', monospace;
+    font-size: clamp(11px, 2.6vw, 13px);
+    letter-spacing: 0.3em;
+    opacity: 0.55;
+    z-index: 30;
+  }
+
+  .morse-pattern-floating {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: clamp(14px, 3vw, 24px);
+    padding: 24px 32px;
+    background: rgba(15, 20, 25, 0.55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 0.5px solid rgba(244, 232, 216, 0.15);
+    z-index: 20;
+    transition: opacity 0.4s ease;
+    border-radius: 2px;
+  }
+
+  .morse-letter-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 6px;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    min-width: 32px;
+  }
+  .morse-letter-block.completed { opacity: 0.35; }
+  .morse-letter-block.active {
+    transform: translateY(-2px);
+  }
+
+  .morse-letter-char {
+    font-family: Georgia, serif;
+    font-size: clamp(18px, 4.6vw, 22px);
+    color: #F4E8D8;
+    letter-spacing: 0.05em;
+  }
+
+  .morse-letter-symbols {
+    display: flex;
+    gap: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: clamp(14px, 3.6vw, 16px);
+    color: rgba(244, 232, 216, 0.5);
+    letter-spacing: 0.08em;
+    min-height: 22px;
+    align-items: center;
+  }
+
+  .morse-symbol {
+    transition: color 0.2s ease, opacity 0.2s ease, text-shadow 0.2s ease;
+    opacity: 0.4;
+  }
+  .morse-symbol.lit {
+    color: #F4E8D8;
+    opacity: 1;
+    text-shadow: 0 0 10px rgba(244, 232, 216, 0.85);
+  }
+
+  .morse-revealed-floating {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    width: calc(100% - 48px);
+    max-width: 540px;
+    text-align: center;
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: clamp(15px, 4vw, 18px);
+    color: #BFD0F0;
+    background: rgba(15, 20, 25, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 14px 22px;
+    opacity: 0;
+    transition: opacity 1.2s ease, transform 1.2s ease;
+    z-index: 25;
+    pointer-events: none;
+    border: 0.5px solid rgba(244, 232, 216, 0.1);
+  }
+  .morse-revealed-floating.visible {
+    opacity: 0.95;
+    transform: translateX(-50%) translateY(0);
+  }
+  .morse-revealed-floating::before { content: "— "; opacity: 0.6; }
+
+    .ruido-slot { display: inline-block; min-width: 28px; border-bottom: 1px solid rgba(244, 232, 216, 0.4); margin: 0 2px; color: #F4E8D8; transition: all 0.4s ease; }
+  .ruido-slot.filled { border-bottom-color: transparent; color: #F4E8D8; text-shadow: 0 0 8px rgba(244, 232, 216, 0.5); }
+  .ruido-letters-area { position: relative; height: 220px; width: 100%; margin-bottom: 20px; }
+  .floating-letter { position: absolute; width: 52px; height: 52px; border-radius: 50%; background: rgba(15, 20, 25, 0.7); border: 1px solid rgba(244, 232, 216, 0.5); color: #F4E8D8; font-family: 'Courier New', monospace; font-size: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer; touch-action: none; backdrop-filter: blur(4px); transition: opacity 0.4s ease, transform 0.6s ease, background 0.3s ease; user-select: none; overflow: hidden; }
+  .floating-letter .letter-inner { display: inline-block; position: relative; z-index: 2; transition: filter 0.3s ease; }
+  .floating-letter.unstable .letter-inner { animation: letterShake 0.15s linear infinite; filter: blur(0.4px); opacity: 0.85; }
+  .floating-letter.stabilizing { background: rgba(15, 20, 25, 0.9); border-color: rgba(244, 232, 216, 0.9); transform: scale(1.08); }
+  .floating-letter.stabilizing .letter-inner { animation: none; filter: blur(0); opacity: 1; }
+  .floating-letter.captured { opacity: 0; pointer-events: none; transform: scale(0.5); }
+  .floating-letter.dissolving { opacity: 0 !important; transform: scale(0.6) rotate(20deg); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .letter-progress { position: absolute; bottom: 0; left: 0; height: 3px; width: 0%; background: rgba(244, 232, 216, 0.9); transition: width 0.05s linear; z-index: 1; }
+  @keyframes letterShake {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(0.8px, -0.5px); }
+    50% { transform: translate(-0.5px, 0.8px); }
+    75% { transform: translate(-0.8px, -0.5px); }
+    100% { transform: translate(0.5px, 0.8px); }
+  }
+
+  /* FASE 4: TRAVESSIA */
+  .travessia-header { text-align: center; margin-top: 16px; }
+  .travessia-instruction { font-family: Georgia, serif; font-style: italic; font-size: clamp(14px, 3.6vw, 16px); line-height: 1.6; opacity: 0.95; margin-bottom: 8px; }
+  .travessia-hint { font-size: clamp(9px, 2.2vw, 11px); letter-spacing: 0.3em; opacity: 0.55; }
+  .travessia-thought {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: clamp(18px, 5vw, 24px);
+    line-height: 1.5;
+    color: #F4E8D8;
+    opacity: 0;
+    transition: opacity 1.5s ease, transform 1.5s ease;
+    padding: 24px 32px;
+    max-width: 90%;
+    width: auto;
+    text-shadow: 0 2px 24px rgba(0, 0, 0, 0.85), 0 0 40px rgba(0, 0, 0, 0.7);
+    pointer-events: none;
+    z-index: 15;
+  }
+  .travessia-thought.visible {
+    opacity: 0.95;
+    transform: translate(-50%, -50%);
+  }
+  .travessia-progress-area { width: 100%; max-width: 480px; margin: 0 auto; }
+  .travessia-km { font-family: 'Courier New', monospace; font-size: clamp(12px, 3vw, 14px); letter-spacing: 0.15em; text-align: center; margin-bottom: 12px; opacity: 0.85; }
+  .travessia-progress { width: 100%; height: 3px; background: rgba(244, 232, 216, 0.15); border-radius: 1.5px; overflow: hidden; margin-bottom: 24px; }
+  .travessia-progress-bar { height: 100%; width: 0%; background: #F4E8D8; transition: width 0.3s ease; }
+  .travessia-touch-zone { width: 100%; height: 80px; border: 0.5px dashed rgba(244, 232, 216, 0.4); background: rgba(244, 232, 216, 0.04); display: flex; align-items: center; justify-content: center; cursor: pointer; touch-action: none; transition: background 0.3s ease, border-color 0.3s ease; }
+  .travessia-touch-zone.active { background: rgba(244, 232, 216, 0.1); border-color: rgba(244, 232, 216, 0.7); border-style: solid; }
+  .travessia-touch-label { font-size: clamp(10px, 2.6vw, 12px); letter-spacing: 0.3em; opacity: 0.7; }
+
+  /* FASE 5: ENCONTRO (palavras) */
+  .encontro-header { text-align: center; margin-top: 16px; }
+  .encontro-instruction { font-family: Georgia, serif; font-style: italic; font-size: clamp(13px, 3.4vw, 15px); line-height: 1.6; opacity: 0.85; }
+  .encontro-dialogue-area { width: 100%; max-width: 580px; margin: 0 auto; background: rgba(15, 20, 25, 0.7); padding: 24px; backdrop-filter: blur(4px); min-height: 160px; }
+  .encontro-line { margin-bottom: 12px; min-height: 24px; font-family: Georgia, serif; font-style: italic; font-size: clamp(15px, 4vw, 17px); line-height: 1.6; }
+  .encontro-line.lia { color: #F0BFD0; }
+  .encontro-line.bento { color: #BFD0F0; padding-left: 24px; }
+  .encontro-words-area {
+    position: relative;
+    width: 100%;
+    min-height: 120px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 12px;
+  }
+
+  /* Slots na frase (lacunas que recebem palavras) */
+  .duo-slot {
+    display: inline-block;
+    min-width: 60px;
+    padding: 4px 10px;
+    margin: 0 2px;
+    border-bottom: 1.5px solid rgba(244, 232, 216, 0.4);
+    transition: all 0.3s ease;
+    cursor: default;
+    color: #F4E8D8;
+  }
+  .duo-slot.filled {
+    background: rgba(244, 232, 216, 0.12);
+    border-bottom-color: rgba(244, 232, 216, 0.7);
+    cursor: pointer;
+  }
+  .duo-slot.filled:hover {
+    background: rgba(244, 232, 216, 0.2);
+  }
+  .duo-slot.correct {
+    background: rgba(120, 180, 130, 0.18);
+    border-bottom-color: rgba(150, 220, 170, 0.85);
+    cursor: default;
+  }
+  .duo-slot.incorrect {
+    background: rgba(180, 80, 80, 0.18);
+    border-bottom-color: rgba(220, 130, 130, 0.85);
+    animation: shake 0.4s ease;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-3px); }
+    75% { transform: translateX(3px); }
+  }
+
+  /* Palavras no banco (clicáveis) */
+  .duo-word {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 18px;
+    background: rgba(15, 20, 25, 0.7);
+    border: 1px solid rgba(244, 232, 216, 0.4);
+    border-radius: 4px;
+    color: #F4E8D8;
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: clamp(13px, 3.4vw, 15px);
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    transition: opacity 0.3s ease, background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+    user-select: none;
+    box-shadow: 0 2px 0 rgba(244, 232, 216, 0.15);
+  }
+  .duo-word:hover {
+    background: rgba(244, 232, 216, 0.12);
+    border-color: rgba(244, 232, 216, 0.7);
+    transform: translateY(-1px);
+  }
+  .duo-word:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 0 rgba(244, 232, 216, 0.1);
+  }
+  .duo-word.used {
+    opacity: 0.25;
+    cursor: default;
+    pointer-events: none;
+    border-color: rgba(244, 232, 216, 0.15);
+    background: rgba(15, 20, 25, 0.4);
+    box-shadow: none;
+  }
+
+  /* DIÁLOGOS */
+  .dialogue { text-align: left; margin: 16px 0 4px; }
+  .dialogue-line { font-family: Georgia, serif; font-style: italic; font-size: clamp(15px, 4vw, 17px); line-height: 1.55; margin-bottom: 8px; }
+  .dialogue-line.lia { color: #F0BFD0; }
+  .dialogue-line.bento { color: #BFD0F0; padding-left: 24px; }
+
+  /* TELA FINAL */
+  .end-content { text-align: center; max-width: 540px; background: rgba(15, 20, 25, 0.7); padding: 32px 28px; backdrop-filter: blur(6px); border: 0.5px solid rgba(244, 232, 216, 0.1); }
+  .end-content h2 { font-family: Georgia, serif; font-size: clamp(24px, 6.5vw, 32px); font-weight: 400; letter-spacing: 0.05em; margin-bottom: 22px; }
+  .end-content p { font-family: Georgia, serif; font-style: italic; font-size: clamp(13px, 3.6vw, 15px); line-height: 1.7; opacity: 0.92; margin-bottom: 18px; }
+  .end-content p.demo-note { font-style: normal; font-family: 'Inter', sans-serif; font-size: clamp(10px, 2.6vw, 11px); letter-spacing: 0.2em; opacity: 0.7; margin-bottom: 22px; }
+  .end-content .start-button { margin-top: 12px; }
+
+  /* EASTER EGG */
+  .easter-egg { position: absolute; bottom: 8vh; left: 50%; transform: translateX(-50%); text-align: center; opacity: 0; transition: opacity 3s ease; pointer-events: none; width: 90%; max-width: 400px; }
+  .easter-egg.visible { opacity: 1; }
+  .easter-egg p { font-family: Georgia, serif; font-style: italic; font-size: clamp(11px, 2.8vw, 13px); line-height: 1.6; opacity: 0.7; margin-bottom: 12px; }
+  .easter-egg .signature { font-family: 'Courier New', monospace; font-size: clamp(9px, 2.2vw, 10px); letter-spacing: 0.4em; opacity: 0.45; }
+
+  /* BOTÃO DE ÁUDIO */
+  .audio-toggle {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(15, 20, 25, 0.6);
+    border: 0.5px solid rgba(244, 232, 216, 0.4);
+    color: #F4E8D8;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+    opacity: 0.7;
+    font-size: 16px;
+    padding: 0;
+  }
+  .audio-toggle:hover, .audio-toggle:active { opacity: 1; background: rgba(244, 232, 216, 0.15); }
+  .audio-toggle svg { width: 18px; height: 18px; }
+
+  /* MOBILE */
+  @media (max-width: 640px) and (orientation: portrait) {
+    /* Layout em 3 regiões: imagem 55% / texto 25% / UI 20% */
+    /* Aplica nas cenas de gameplay */
+    #scene-gameplay,
+    #scene-fusos-game,
+    #scene-ruido-game,
+    #scene-travessia-game,
+    #scene-encontro-game {
+      background-size: 100% 55% !important;
+      background-position: top center !important;
+      background-repeat: no-repeat !important;
+      background-color: #0F1419;
+      justify-content: flex-end !important;
+      padding-bottom: 24px;
+    }
+
+    /* Adiciona um gradiente de transição entre imagem e área inferior */
+    #scene-gameplay::before,
+    #scene-fusos-game::before,
+    #scene-ruido-game::before,
+    #scene-travessia-game::before,
+    #scene-encontro-game::before {
+      content: '';
+      position: absolute;
+      top: 40%;
+      left: 0;
+      width: 100%;
+      height: 30%;
+      background: linear-gradient(180deg, transparent 0%, #0F1419 60%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Garante que conteúdo da gameplay fique abaixo dos 55% iniciais */
+    #scene-fusos-game .fusos-container,
+    #scene-travessia-game .travessia-progress-area,
+    #scene-encontro-game .encontro-dialogue-area,
+    #scene-encontro-game .encontro-words-area {
+      position: relative;
+      z-index: 5;
+    }
+
+    /* TRAVESSIA: pensamentos no centro da imagem (parte de cima) */
+    #scene-travessia-game .travessia-thought {
+      top: 27% !important;
+      font-size: clamp(15px, 4.5vw, 18px) !important;
+      max-width: 90% !important;
+    }
+
+    /* TRAVESSIA: progresso e botão na parte de baixo */
+    #scene-travessia-game .travessia-progress-area {
+      width: calc(100% - 32px);
+      max-width: 100%;
+      margin-top: auto;
+    }
+
+    /* FUSOS: círculo de respiração centralizado na zona de baixo */
+    #scene-fusos-game {
+      align-items: center !important;
+    }
+    #scene-fusos-game .fusos-container {
+      margin-top: 50%;
+      padding: 12px 20px;
+    }
+    #scene-fusos-game .breath-circle-container {
+      width: clamp(120px, 28vw, 160px) !important;
+      height: clamp(120px, 28vw, 160px) !important;
+    }
+    #scene-fusos-game .fusos-instruction {
+      font-size: clamp(13px, 3.4vw, 15px) !important;
+      margin-bottom: 20px !important;
+    }
+
+    /* ENCONTRO: diálogo e banco de palavras na parte de baixo */
+    #scene-encontro-game {
+      padding-top: 56% !important;
+    }
+    #scene-encontro-game .encontro-dialogue-area {
+      min-height: 100px;
+      padding: 14px 16px;
+    }
+
+    /* RUÍDO: padrão Morse na parte de baixo (em cima da imagem fica feio) */
+    #scene-ruido-game {
+      padding-top: 56% !important;
+    }
+    #scene-ruido-game .morse-pattern-floating {
+      padding: 14px 18px;
+      gap: 10px;
+    }
+    #scene-ruido-game .morse-revealed-floating {
+      bottom: 16px;
+    }
+    #scene-ruido-game .morse-counter {
+      top: 14px;
+      right: 14px;
+    }
+
+    /* GAMEPLAY (Fase 1 com dois lados): mantém layout horizontal mesmo em retrato */
+    /* mas comprime altura pra não cortar */
+    #scene-gameplay {
+      background-size: cover !important;
+      background-position: center !important;
+      flex-direction: row !important;
+      padding: 0 !important;
+    }
+    #scene-gameplay::before {
+      display: none;
+    }
+
+    /* Instruction overlay: posiciona no topo SEM cobrir imagem */
+    .instruction-overlay {
+      top: 12px !important;
+      width: calc(100% - 24px) !important;
+      padding: 10px 14px !important;
+    }
+    .instruction-overlay p {
+      font-size: 12px !important;
+      line-height: 1.4 !important;
+    }
+    .instruction-overlay .hint-line {
+      font-size: 9px !important;
+    }
+
+    .title-content { padding: 20px; }
+    .cutscene { padding-bottom: 16vh; }
+    .cutscene-text { padding: 22px 20px; }
+    #scene-characters { padding: 20px 16px; padding-top: 5vh; }
+    .characters-container { flex-direction: column; gap: 12px; max-width: 360px; margin: 0 auto; }
+    .character-card { padding: 12px 14px 14px; flex-direction: row; gap: 14px; text-align: left; align-items: center; }
+    .character-portrait { width: 90px; flex-shrink: 0; aspect-ratio: 3/4; margin-bottom: 0; }
+    .character-card-info { flex: 1; min-width: 0; }
+    .character-card h3 { font-size: 18px; margin-bottom: 2px; }
+    .character-card .age-loc { margin-bottom: 8px; font-size: 9px; }
+    .character-card .description { font-size: 12px; line-height: 1.5; }
+    .side { padding: 16px 8px; }
+    .character-location { margin-bottom: 16px; }
+    .frequency-display { margin-top: 10px; }
+    .signal-strength { margin-top: 12px; }
+    .dialogue-line.bento { padding-left: 16px; }
+    .end-content { padding: 28px 22px; max-width: calc(100% - 32px); }
+    .continue-hint { bottom: 4vh; }
+    .encontro-line.bento { padding-left: 16px; }
+    .duo-word { padding: 8px 14px; }
+  }
+
+  /* Mobile landscape ou tablets pequenos: comportamento próximo do desktop */
+  @media (max-width: 640px) and (orientation: landscape) {
+    .characters-container { flex-direction: row; gap: 12px; }
+  }
+
+  /* ===== LAYOUT MOBILE: 3 REGIÕES (imagem 60% / texto 25% / UI 15%) ===== */
+  @media (max-width: 768px) {
+    /* Aplicado apenas em cenas de GAMEPLAY (não cutscenes nem título) */
+    #scene-fusos-game,
+    #scene-ruido-game,
+    #scene-travessia-game,
+    #scene-encontro-game {
+      background-size: 100% 60%;
+      background-position: top center;
+      background-repeat: no-repeat;
+      background-attachment: local;
+    }
+    /* Cor de fundo escura na parte de baixo (40%) */
+    #scene-fusos-game::before,
+    #scene-ruido-game::before,
+    #scene-travessia-game::before,
+    #scene-encontro-game::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      background: linear-gradient(180deg, rgba(15, 20, 25, 0.6) 0%, rgba(15, 20, 25, 1) 25%, rgba(15, 20, 25, 1) 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+    /* Garantir que conteúdo fica acima do gradiente */
+    #scene-fusos-game > *,
+    #scene-ruido-game > *,
+    #scene-travessia-game > *,
+    #scene-encontro-game > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Fusos: container fica embaixo */
+    #scene-fusos-game { justify-content: flex-end; padding-bottom: 8vh; }
+    .fusos-container { padding: 16px; max-width: 100%; }
+    .fusos-instruction { margin-bottom: 20px; font-size: 14px; }
+    .breath-circle-container {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 16px;
+    }
+    .fusos-counter { margin-top: 12px; }
+
+    /* Travessia: pensamento fica na zona de texto (não centralizado absoluto) */
+    .travessia-thought {
+      position: absolute;
+      top: 60%;
+      left: 0;
+      right: 0;
+      transform: translateY(-50%);
+      font-size: clamp(15px, 4.5vw, 18px);
+      padding: 16px 24px;
+      max-width: 100%;
+      width: auto;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+    }
+    .travessia-thought.visible {
+      transform: translateY(-50%);
+    }
+    #scene-travessia-game {
+      justify-content: flex-end;
+      padding: 16px 16px 6vh;
+    }
+    .travessia-progress-area { margin-top: auto; }
+    .travessia-touch-zone { height: 60px; }
+
+    /* Morse: imagem em cima, padrão e contador embaixo */
+    #scene-ruido-game { justify-content: flex-end; padding-bottom: 4vh; }
+    .morse-pattern-floating {
+      margin-bottom: 16px;
+      padding: 12px 16px;
+      gap: 10px;
+    }
+    .morse-revealed-floating {
+      bottom: 14vh;
+    }
+
+    /* Encontro: dialog area embaixo */
+    #scene-encontro-game {
+      justify-content: flex-end;
+      padding: 16px 16px 4vh;
+    }
+    .encontro-dialogue-area {
+      background: rgba(15, 20, 25, 0.85);
+      padding: 14px 16px;
+      min-height: auto;
+      margin-bottom: 12px;
+    }
+    .encontro-line {
+      font-size: clamp(13px, 3.6vw, 15px);
+      margin-bottom: 6px;
+    }
+    .encontro-words-area {
+      min-height: 90px;
+      padding: 8px;
+      gap: 6px;
+    }
+    .duo-word { padding: 7px 12px; font-size: 13px; }
+
+    /* Instrução overlay menor em mobile */
+    .instruction-overlay {
+      top: 12px;
+      padding: 10px 14px;
+      width: calc(100% - 24px);
+    }
+    .instruction-overlay p { font-size: 12px; }
+    .instruction-overlay .hint-line { font-size: 9px; }
+  }
+
+  /* Instruções que somem após alguns segundos */
+  .auto-hide {
+    animation: fadeOutInstruction 0s ease 5s forwards;
+    -webkit-animation: fadeOutInstruction 0s ease 5s forwards;
+  }
+  @keyframes fadeOutInstruction {
+    to { opacity: 0; pointer-events: none; visibility: hidden; }
+  }
+  .instruction-overlay {
+    position: absolute;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 48px);
+    max-width: 540px;
+    text-align: center;
+    background: rgba(15, 20, 25, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 14px 20px;
+    border: 0.5px solid rgba(244, 232, 216, 0.15);
+    z-index: 50;
+    transition: opacity 1.2s ease, transform 1.2s ease;
+    border-radius: 2px;
+  }
+  .instruction-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, -8px);
+  }
+  .instruction-overlay p {
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: clamp(12px, 3vw, 14px);
+    line-height: 1.5;
+    margin: 0;
+    color: #F4E8D8;
+  }
+  .instruction-overlay .hint-line {
+    font-style: normal;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(9px, 2.2vw, 10px);
+    letter-spacing: 0.3em;
+    opacity: 0.65;
+    margin-top: 6px;
+  }
+
+</style>
+</head>
+<body>
+
+<div id="game">
+
+  <button class="audio-toggle" id="audio-toggle" aria-label="Alternar áudio" title="Alternar áudio">
+    <svg id="icon-sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+      <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+      <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+    </svg>
+    <svg id="icon-sound-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+      <line x1="22" y1="9" x2="16" y2="15"></line>
+      <line x1="16" y1="9" x2="22" y2="15"></line>
+    </svg>
+  </button>
+
+  <div class="scene active" id="scene-title">
+    <div class="title-content">
+      <p class="subtitle">UM ENCONTRO NO FIM DO MUNDO</p>
+      <div class="divider"></div>
+      <h1>CONVERGIR</h1>
+      <div class="divider"></div>
+      <p class="phase-label">DEMO</p>
+    </div>
+    <button class="start-button" onclick="goToScene(&#39;scene-intro-lia&#39;)">INICIAR</button>
+  </div>
+
+  <div class="scene cutscene" id="scene-intro-lia" data-next="scene-intro-bento">
+    <div class="cutscene-text">
+      <p class="cutscene-location">UBERLÂNDIA, MG · ANO 7 DO SILÊNCIO</p>
+      <p class="cutscene-narration">A internet caiu há sete anos. As cidades pararam. Lia ficou. Continuou aprendendo no escuro, do jeito que sempre soube fazer.</p>
+    </div>
+    <p class="continue-hint" onclick="goToScene(&#39;scene-intro-bento&#39;)">TOQUE PARA CONTINUAR</p>
+  </div>
+
+  <div class="scene cutscene" id="scene-intro-bento" data-next="scene-characters">
+    <div class="cutscene-text">
+      <p class="cutscene-location">SINOP, MT · A 1.547 KM DALI</p>
+      <p class="cutscene-narration">Bento construiu uma rede improvisada de antenas na borda da floresta. Não esperava nada. Só o gesto de tentar.</p>
+    </div>
+    <p class="continue-hint" onclick="goToScene(&#39;scene-characters&#39;)">TOQUE PARA CONTINUAR</p>
+  </div>
+
+  <div class="scene" id="scene-characters" data-action="startGameplay" style="cursor: pointer;">
+    <div class="characters-header"><p class="subtitle">PERSONAGENS</p></div>
+    <div class="characters-container">
+      <div class="character-card">
+        <div class="character-portrait lia"></div>
+        <div class="character-card-info">
+          <h3>Lia</h3>
+          <p class="age-loc">45 ANOS · UBERLÂNDIA, MG</p>
+          <p class="description">Demissexual, intelectualmente brilhante. Antes do colapso, fazia o terceiro doutorado. Direta, honesta, espevitada.</p>
+        </div>
+      </div>
+      <div class="character-card">
+        <div class="character-portrait bento"></div>
+        <div class="character-card-info">
+          <h3>Bento</h3>
+          <p class="age-loc">50 ANOS · SINOP, MT</p>
+          <p class="description">Espelho de Lia. Mesma essência, mesma frequência. Construiu sua paz sozinho. Espera sem esperar.</p>
+        </div>
+      </div>
+    </div>
+    <p class="continue-hint" onclick="startGameplay()">TOQUE PARA SINTONIZAR</p>
+  </div>
+
+  <div class="scene" id="scene-gameplay">
+    <div id="tutorial">
+      <p>Arraste os dois dials para sintonizar a mesma frequência ao mesmo tempo.</p>
+      <small>FREQUÊNCIA ALVO: 88.7</small>
+    </div>
+    <div id="connection-line"></div>
+    <div class="side side-lia">
+      <p class="character-label">LIA</p>
+      <p class="character-name">Uberlândia</p>
+      <p class="character-location">CERRADO · NOITE</p>
+      <div class="radio-dial" id="dial-lia">
+        <div class="dial-pointer" id="pointer-lia" style="transform: translate(-50%, -100%) rotate(-120deg);"></div>
+        <div class="dial-center"></div>
+      </div>
+      <div class="frequency-display" id="freq-lia">FM 86.0</div>
+      <div class="signal-strength"><div class="signal-bar" id="signal-lia" style="width: 10%;"></div></div>
+      <p class="signal-label">SINAL</p>
+    </div>
+    <div class="side-divider"></div>
+    <div class="side side-bento">
+      <p class="character-label">BENTO</p>
+      <p class="character-name">Sinop</p>
+      <p class="character-location">FLORESTA · ALVORADA</p>
+      <div class="radio-dial" id="dial-bento">
+        <div class="dial-pointer" id="pointer-bento" style="transform: translate(-50%, -100%) rotate(120deg);"></div>
+        <div class="dial-center"></div>
+      </div>
+      <div class="frequency-display" id="freq-bento">FM 92.0</div>
+      <div class="signal-strength"><div class="signal-bar" id="signal-bento" style="width: 0%;"></div></div>
+      <p class="signal-label">SINAL</p>
+    </div>
+  </div>
+
+  <div class="scene cutscene" id="scene-connection" data-next="scene-map">
+    <div class="cutscene-text">
+      <div class="dialogue">
+        <p class="dialogue-line lia">— Tem alguém aí?</p>
+        <p class="dialogue-line bento">— Tem. Tem alguém aqui.</p>
+      </div>
+      <p class="cutscene-narration" style="margin-top: 18px;">A onda atravessou mil quinhentos quilômetros de Brasil em ruínas. Eles não sabiam ainda. Mas alguma coisa começou.</p>
+    </div>
+    <p class="continue-hint" onclick="goToScene(&#39;scene-map&#39;)">TOQUE PARA CONTINUAR</p>
+  </div>
+
+  <div class="scene cutscene" id="scene-map" data-next="scene-fusos-intro">
+    <div class="cutscene-text">
+      <p class="cutscene-location">ENTRE DOIS PONTOS DO BRASIL</p>
+      <p class="cutscene-narration">Dois sinais começaram a pulsar no mesmo ritmo. Cada um do seu lado. A história continuaria.</p>
+    </div>
+    <p class="continue-hint" onclick="goToScene(&#39;scene-fusos-intro&#39;)">TOQUE PARA CONTINUAR</p>
+  </div>
+
+  <div class="scene cutscene" id="scene-fusos-intro" data-action="startFusos">
+    <div class="cutscene-text">
+      <p class="cutscene-location">FASE 02 · OS FUSOS</p>
+      <p class="cutscene-narration">Ela vivia de noite. Ele de dia. O encontro só cabia no fio fino entre os dois. Aprenderam a esperar.</p>
+    </div>
+    <p class="continue-hint" onclick="startFusos()">TOQUE PARA ESPERAR</p>
+  </div>
+
+  <div class="scene" id="scene-fusos-game">
+    <div class="fusos-container">
+      <p class="fusos-instruction" id="fusos-instruction">Lia mandou a mensagem. Agora ela espera Bento acordar.</p>
+      <div class="breath-circle-container">
+        <div class="breath-circle" id="breath-circle"></div>
+        <div class="breath-text" id="breath-text">RESPIRE</div>
+      </div>
+      <p class="fusos-counter" id="fusos-counter">00:10</p>
+    </div>
+  </div>
+
+  <div class="scene cutscene" id="scene-ruido-intro" data-action="startRuido">
+    <div class="cutscene-text">
+      <p class="cutscene-location">FASE 03 · O RUÍDO</p>
+      <p class="cutscene-narration">A comunicação falhou. As palavras chegavam quebradas. Foi preciso aprender a ouvir o que não estava sendo dito.</p>
+    </div>
+    <p class="continue-hint" onclick="startRuido()">TOQUE PARA DECIFRAR</p>
+  </div>
+
+  <div class="scene" id="scene-ruido-game">
+    <div class="instruction-overlay" id="morse-instruction-overlay">
+      <p id="morse-instruction-text">Toque na tela: rápido para ponto · prolongado para traço.</p>
+      <p class="hint-line">REPRODUZA O PADRÃO DE BENTO</p>
+    </div>
+
+    <div class="morse-counter" id="morse-counter">1 / 3</div>
+
+    <div class="morse-pattern-floating" id="morse-pattern"></div>
+
+    <div class="morse-revealed-floating" id="morse-revealed"></div>
+
+    <div class="morse-pulse-overlay" id="morse-pulse"></div>
+  </div>
+
+  <div class="scene cutscene" id="scene-travessia-intro" data-action="startTravessia">
+    <div class="cutscene-text">
+      <p class="cutscene-location">FASE 04 · A TRAVESSIA</p>
+      <p class="cutscene-narration">Decidiram se encontrar. Ela saiu do cerrado. Ele saiu da floresta. Atravessar o Brasil devastado custou tudo o que tinham.</p>
+    </div>
+    <p class="continue-hint" onclick="startTravessia()">TOQUE PARA ATRAVESSAR</p>
+  </div>
+
+  <div class="scene" id="scene-travessia-game">
+    <div class="instruction-overlay" id="travessia-instruction-overlay">
+      <p>Lia caminha enquanto você sustenta o gesto.</p>
+      <p class="hint-line">MANTENHA O DEDO · NÃO SOLTE</p>
+    </div>
+    <p class="travessia-thought" id="travessia-thought"></p>
+    <div class="travessia-progress-area">
+      <p class="travessia-km" id="travessia-km">0 / 1.547 KM</p>
+      <div class="travessia-progress"><div class="travessia-progress-bar" id="travessia-bar"></div></div>
+      <div class="travessia-touch-zone" id="travessia-touch">
+        <p class="travessia-touch-label">SEGURE AQUI</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="scene cutscene" id="scene-convergencia" data-action="startEncontro">
+    <div class="cutscene-text">
+      <p class="cutscene-location">FASE 05 · A CONVERGÊNCIA</p>
+      <p class="cutscene-narration">Em algum ponto rural de Goiás, no fim de uma tarde dourada, dois caminhos finalmente se cruzaram no mesmo plano.</p>
+    </div>
+    <p class="continue-hint" onclick="startEncontro()">TOQUE PARA SE APROXIMAR</p>
+  </div>
+
+  <div class="scene" id="scene-encontro-game">
+    <div class="instruction-overlay" id="encontro-instruction-overlay">
+      <p>Toque numa palavra e depois no espaço onde ela cabe.</p>
+      <p class="hint-line">CADA FRASE PRECISA DE ESFORÇO</p>
+    </div>
+    <div class="encontro-dialogue-area">
+      <div class="encontro-line lia" id="line-1"></div>
+      <div class="encontro-line bento" id="line-2"></div>
+      <div class="encontro-line lia" id="line-3"></div>
+    </div>
+    <div class="encontro-words-area" id="encontro-words"></div>
+  </div>
+
+  <div class="scene cutscene" id="scene-toque" data-next="scene-end">
+    <div class="cutscene-text">
+      <p class="cutscene-narration">A pulseira larga prateada dela. O relógio de couro dele. As duas mãos, finalmente, no mesmo lugar.</p>
+    </div>
+    <p class="continue-hint" onclick="goToScene(&#39;scene-end&#39;)">TOQUE PARA CONTINUAR</p>
+  </div>
+
+  <div class="scene" id="scene-end">
+    <div class="end-content">
+      <p class="demo-note">FIM DA DEMONSTRAÇÃO</p>
+      <h2>Convergir</h2>
+      <p>Para chegar até você, eu atravessei o fim do mundo.</p>
+      <button class="start-button" onclick="restartGame()">JOGAR NOVAMENTE</button>
+    </div>
+    <div class="easter-egg" id="easter-egg">
+      <p>Algumas histórias atravessam mais que distância.</p>
+      <p class="signature">FM 88.7 · 2026</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* CONVERGIR — Obra original. Autoria registrada no comentário do topo deste documento. */
+
+// ============================================================================
+// LOG SILENCIOSO (apenas console)
+// ============================================================================
+function debug(msg) {
+  console.log('[CONVERGIR]', msg);
+}
+
+debug('script carregado');
+
+// ============================================================================
+// MOTOR DE ÁUDIO — versão simplificada com beep de teste
+// ============================================================================
+let audioCtx = null;
+let masterGain = null;
+let activeOscillators = [];
+let currentMood = null;
+let isMuted = false;
+
+function audioInit() {
+  if (audioCtx) {
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume().then(() => debug('audio resumed: ' + audioCtx.state));
+    }
+    return true;
+  }
+  try {
+    const Ctor = window.AudioContext || window.webkitAudioContext;
+    if (!Ctor) { debug('ERRO: Web Audio indisponivel'); return false; }
+    audioCtx = new Ctor();
+    masterGain = audioCtx.createGain();
+    masterGain.gain.value = 0.7;
+    masterGain.connect(audioCtx.destination);
+    debug('audio criado: ' + audioCtx.state + ', sr=' + audioCtx.sampleRate);
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume().then(() => debug('resumed: ' + audioCtx.state));
+    }
+    return true;
+  } catch (e) {
+    debug('ERRO init: ' + e.message);
+    return false;
+  }
+}
+
+function playTestBeep() {
+  if (!audioCtx) { debug('ERRO beep: ctx null'); return; }
+  try {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'sine';
+    osc.frequency.value = 440;
+    gain.gain.value = 0;
+    gain.gain.linearRampToValueAtTime(0.4, audioCtx.currentTime + 0.05);
+    gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.6);
+    osc.connect(gain);
+    gain.connect(masterGain);
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.7);
+    debug('beep tocado');
+  } catch (e) {
+    debug('ERRO beep: ' + e.message);
+  }
+}
+
+function stopAllOscillators() {
+  if (!audioCtx) return;
+  activeOscillators.forEach(o => {
+    try {
+      o.gain.gain.cancelScheduledValues(audioCtx.currentTime);
+      o.gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1.2);
+      setTimeout(() => { try { o.osc.stop(); } catch(e){} }, 1400);
+    } catch(e){}
+  });
+  activeOscillators = [];
+}
+
+function playNote(freq, gainTarget, attack) {
+  if (!audioCtx || !masterGain) return null;
+  try {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'sine';
+    osc.frequency.value = freq;
+    gain.gain.value = 0;
+    gain.gain.linearRampToValueAtTime(gainTarget, audioCtx.currentTime + (attack || 2));
+    osc.connect(gain);
+    gain.connect(masterGain);
+    osc.start();
+    activeOscillators.push({ osc, gain });
+    return { osc, gain };
+  } catch (e) {
+    debug('ERRO playNote: ' + e.message);
+    return null;
+  }
+}
+
+// ============================================================================
+// CAMADA MELÓDICA — toca notas curtas em cima dos drones
+// ============================================================================
+let melodyTimeout = null;
+let melodyEnabled = false;
+
+// Melodias por mood — frequências em Hz, escala de A menor
+// A3=220, B3=246.94, C4=261.63, D4=293.66, E4=329.63, F4=349.23, G4=392, A4=440
+const MELODIES = {
+  // Solitária, contemplativa
+  'title': [
+    { f: 440, d: 1.5, p: 3 },   // A4
+    { f: 329.63, d: 2, p: 4 },  // E4
+    { f: 293.66, d: 1.5, p: 3 },// D4
+    { f: 220, d: 3, p: 5 }      // A3
+  ],
+  'intro': [
+    { f: 440, d: 2, p: 4 },
+    { f: 392, d: 1.5, p: 3 },
+    { f: 329.63, d: 2.5, p: 4 },
+    { f: 293.66, d: 2, p: 5 }
+  ],
+  'characters': [
+    { f: 440, d: 1.2, p: 2.5 },
+    { f: 523.25, d: 1.8, p: 3 },
+    { f: 440, d: 1.5, p: 3 },
+    { f: 349.23, d: 2, p: 4 }
+  ],
+  // Dois temas alternando, dissonantes (Lia e Bento desafinados)
+  'gameplay-disconnected': [
+    { f: 440, d: 1, p: 3 },
+    { f: 466.16, d: 1, p: 3 },
+    { f: 415.30, d: 1.2, p: 4 }
+  ],
+  // Convergência harmônica
+  'gameplay-connected': [
+    { f: 440, d: 1.5, p: 2 },
+    { f: 523.25, d: 1.5, p: 2 },
+    { f: 659.25, d: 2, p: 3 }
+  ],
+  'connection': [
+    { f: 440, d: 1.8, p: 3 },
+    { f: 523.25, d: 1.5, p: 2.5 },
+    { f: 587.33, d: 1.8, p: 3 },
+    { f: 523.25, d: 2, p: 4 }
+  ],
+  // Lenta, espaçada, esperando
+  'fusos': [
+    { f: 329.63, d: 3, p: 6 },
+    { f: 293.66, d: 3.5, p: 6 },
+    { f: 220, d: 4, p: 7 }
+  ],
+  // Fragmentada, instável
+  'ruido': [
+    { f: 466.16, d: 0.8, p: 2 },
+    { f: 415.30, d: 1, p: 3 },
+    { f: 440, d: 0.6, p: 2 },
+    { f: 349.23, d: 1.5, p: 3 }
+  ],
+  // Caminho longo
+  'travessia': [
+    { f: 329.63, d: 2.5, p: 4 },
+    { f: 293.66, d: 2.5, p: 4 },
+    { f: 261.63, d: 3, p: 5 },
+    { f: 293.66, d: 2.5, p: 4 },
+    { f: 329.63, d: 3, p: 5 }
+  ],
+  // Resolução, encontro
+  'convergencia': [
+    { f: 440, d: 2, p: 3 },
+    { f: 554.37, d: 2, p: 3 },   // C#5
+    { f: 659.25, d: 2.5, p: 4 }
+  ],
+  'encontro': [
+    { f: 440, d: 1.8, p: 3 },
+    { f: 554.37, d: 1.8, p: 3 },
+    { f: 659.25, d: 2, p: 3 },
+    { f: 880, d: 2.5, p: 4 }
+  ],
+  'toque': [
+    { f: 440, d: 2.5, p: 4 },
+    { f: 329.63, d: 3, p: 5 }
+  ],
+  // Resolução final
+  'end': [
+    { f: 440, d: 2.5, p: 4 },
+    { f: 329.63, d: 2.5, p: 4 },
+    { f: 293.66, d: 3, p: 5 },
+    { f: 220, d: 4, p: 6 }
+  ]
+};
+
+function playMelodyNote(freq, duration) {
+  if (!audioCtx || !masterGain || isMuted) return;
+  try {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'triangle';  // mais suave que sine, audível
+    osc.frequency.value = freq;
+
+    const now = audioCtx.currentTime;
+    const attack = 0.3;
+    const release = duration * 0.7;
+    const peakGain = 0.18;  // baixinho, não atrapalha o drone
+
+    gain.gain.value = 0;
+    gain.gain.linearRampToValueAtTime(peakGain, now + attack);
+    gain.gain.linearRampToValueAtTime(peakGain * 0.7, now + duration - release);
+    gain.gain.linearRampToValueAtTime(0, now + duration);
+
+    // Filtro lowpass pra suavizar harmônicos
+    const filter = audioCtx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.value = 2000;
+    filter.Q.value = 1;
+
+    osc.connect(filter);
+    filter.connect(gain);
+    gain.connect(masterGain);
+    osc.start(now);
+    osc.stop(now + duration + 0.1);
+  } catch (e) {
+    debug('ERRO melody: ' + e.message);
+  }
+}
+
+function startMelodyLoop(mood) {
+  // Cancela loop anterior
+  if (melodyTimeout) { clearTimeout(melodyTimeout); melodyTimeout = null; }
+  melodyEnabled = true;
+
+  const melody = MELODIES[mood];
+  if (!melody) return;
+
+  let noteIndex = 0;
+
+  function playNext() {
+    if (!melodyEnabled || currentMood !== mood) return;
+    const note = melody[noteIndex];
+    playMelodyNote(note.f, note.d);
+    // Próxima nota depois de pause + duration
+    const totalWait = (note.d + note.p) * 1000;
+    noteIndex = (noteIndex + 1) % melody.length;
+    melodyTimeout = setTimeout(playNext, totalWait);
+  }
+
+  // Começa com pequeno delay aleatório
+  melodyTimeout = setTimeout(playNext, 1500 + Math.random() * 1500);
+}
+
+function stopMelodyLoop() {
+  melodyEnabled = false;
+  if (melodyTimeout) { clearTimeout(melodyTimeout); melodyTimeout = null; }
+}
+
+function setMood(mood) {
+  if (!audioCtx) { debug('setMood ignorado'); return; }
+  if (currentMood === mood) return;
+  debug('mood: ' + mood);
+  currentMood = mood;
+  stopAllOscillators();
+  stopMelodyLoop();
+  setTimeout(() => {
+    switch (mood) {
+      case 'title':
+      case 'intro':
+        playNote(110, 0.4, 3);
+        playNote(165, 0.2, 4);
+        break;
+      case 'characters':
+        playNote(110, 0.35, 3);
+        playNote(165, 0.25, 3);
+        playNote(220, 0.15, 4);
+        break;
+      case 'gameplay-disconnected':
+        playNote(110, 0.3, 3);
+        playNote(123.47, 0.3, 3);
+        break;
+      case 'gameplay-connected':
+      case 'connection':
+      case 'map':
+        playNote(110, 0.35, 2);
+        playNote(165, 0.3, 2);
+        playNote(220, 0.2, 3);
+        break;
+      case 'fusos':
+        playNote(110, 0.3, 3);
+        playNote(82.5, 0.2, 4);
+        break;
+      case 'ruido':
+        playNote(110, 0.3, 3);
+        playNote(116, 0.2, 3);
+        playNote(165, 0.18, 4);
+        break;
+      case 'travessia':
+        playNote(110, 0.35, 4);
+        playNote(82.5, 0.25, 5);
+        break;
+      case 'convergencia':
+      case 'encontro':
+        playNote(110, 0.35, 3);
+        playNote(138.59, 0.25, 3);
+        playNote(165, 0.25, 3);
+        playNote(220, 0.18, 4);
+        break;
+      case 'toque':
+      case 'end':
+        playNote(110, 0.3, 4);
+        playNote(165, 0.22, 5);
+        playNote(220, 0.15, 6);
+        break;
+    }
+    // Inicia melodia da cena
+    startMelodyLoop(mood);
+  }, 1400);
+}
+
+function toggleMute() {
+  if (!audioCtx) return false;
+  isMuted = !isMuted;
+  masterGain.gain.linearRampToValueAtTime(isMuted ? 0 : 0.7, audioCtx.currentTime + 0.4);
+  debug('muted: ' + isMuted);
+  return isMuted;
+}
+
+// API simulando o objeto antigo pra não quebrar o resto do código
+const AudioEngine = {
+  init: audioInit,
+  setMood: setMood,
+  toggleMute: toggleMute,
+  isStarted: () => audioCtx !== null,
+  isReady: () => audioCtx && audioCtx.state === 'running'
+};
+
+// ============================================================================
+// MÚSICA DE FUNDO CONTÍNUA (camada melódica baixa, em loop)
+// ============================================================================
+let bgMusicGain = null;
+let bgMusicOscillators = [];
+let bgMusicInterval = null;
+
+// Progressão harmônica em Lá menor (melancólica): Am -> F -> C -> G
+// Frequências dos baixos das notas
+const BG_PROGRESSION = [
+  { root: 110, third: 130.81, fifth: 164.81 },    // Am (A C E)
+  { root: 87.31, third: 110, fifth: 130.81 },      // F (F A C) - quinta é C
+  { root: 130.81, third: 164.81, fifth: 196 },     // C (C E G)
+  { root: 98, third: 123.47, fifth: 146.83 }       // G (G B D)
+];
+
+let bgChordIndex = 0;
+
+function startBackgroundMusic() {
+  if (!audioCtx || bgMusicGain) return;
+  bgMusicGain = audioCtx.createGain();
+  bgMusicGain.gain.value = 0;
+  bgMusicGain.gain.linearRampToValueAtTime(0.18, audioCtx.currentTime + 4);
+  bgMusicGain.connect(masterGain);
+  
+  playBgChord();
+  // Troca de acorde a cada 8 segundos
+  bgMusicInterval = setInterval(playBgChord, 8000);
+  debug('bg music iniciada');
+}
+
+function playBgChord() {
+  if (!audioCtx || !bgMusicGain) return;
+  const chord = BG_PROGRESSION[bgChordIndex];
+  bgChordIndex = (bgChordIndex + 1) % BG_PROGRESSION.length;
+  
+  // Apaga acorde anterior
+  bgMusicOscillators.forEach(o => {
+    try {
+      o.gain.gain.cancelScheduledValues(audioCtx.currentTime);
+      o.gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 4);
+      setTimeout(() => { try { o.osc.stop(); } catch(e){} }, 4500);
+    } catch(e){}
+  });
+  bgMusicOscillators = [];
+  
+  // Toca o novo acorde com fade in suave
+  [chord.root, chord.third, chord.fifth].forEach((freq, idx) => {
+    try {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      const filter = audioCtx.createBiquadFilter();
+      
+      osc.type = 'triangle';
+      osc.frequency.value = freq;
+      
+      filter.type = 'lowpass';
+      filter.frequency.value = 600;
+      filter.Q.value = 0.5;
+      
+      // Volume bem baixo, decrescente para notas mais agudas
+      const targetGain = idx === 0 ? 0.3 : (idx === 1 ? 0.18 : 0.12);
+      gain.gain.value = 0;
+      gain.gain.linearRampToValueAtTime(targetGain, audioCtx.currentTime + 3);
+      gain.gain.linearRampToValueAtTime(targetGain * 0.7, audioCtx.currentTime + 7);
+      
+      osc.connect(filter);
+      filter.connect(gain);
+      gain.connect(bgMusicGain);
+      osc.start();
+      bgMusicOscillators.push({ osc, gain });
+    } catch (e) {
+      debug('ERRO bg chord: ' + e.message);
+    }
+  });
+}
+
+// ============================================================================
+// INICIALIZAÇÃO NA PRIMEIRA INTERAÇÃO
+// ============================================================================
+let audioInitialized = false;
+function startAudioOnInteraction(e) {
+  if (audioInitialized) return;
+  audioInitialized = true;
+  debug('toque: ' + (e ? e.type : '?'));
+  const ok = audioInit();
+  debug('init: ' + ok);
+  setTimeout(() => {
+    setMood('title');
+    startBackgroundMusic();
+  }, 500);
+
+  // Solicita fullscreen no mobile (apenas)
+  if (window.innerWidth <= 768) {
+    requestFullscreen();
+  }
+}
+
+function requestFullscreen() {
+  const el = document.documentElement;
+  try {
+    if (el.requestFullscreen) {
+      el.requestFullscreen().catch(() => {});
+    } else if (el.webkitRequestFullscreen) {
+      el.webkitRequestFullscreen();
+    } else if (el.msRequestFullscreen) {
+      el.msRequestFullscreen();
+    }
+  } catch (e) {
+    // Silently fail - alguns browsers não permitem
+  }
+}
+
+document.addEventListener('click', startAudioOnInteraction);
+document.addEventListener('touchstart', startAudioOnInteraction);
+document.addEventListener('keydown', startAudioOnInteraction);
+
+// Botão de mute
+document.getElementById('audio-toggle').addEventListener('click', function(e) {
+  e.stopPropagation();
+  if (!audioInitialized) startAudioOnInteraction(e);
+  const muted = toggleMute();
+  document.getElementById('icon-sound-on').style.display = muted ? 'none' : 'block';
+  document.getElementById('icon-sound-off').style.display = muted ? 'block' : 'none';
+});
+
+// Permite avançar cutscenes ao tocar em qualquer lugar da tela
+document.querySelectorAll('.scene.cutscene, #scene-characters').forEach(scene => {
+  scene.addEventListener('click', function(e) {
+    // Só avança se esta cena estiver ativa AGORA (não no momento que listener foi anexado)
+    if (!this.classList.contains('active')) return;
+    // Ignora cliques em botões, links, ou no próprio continue-hint (que tem onclick)
+    if (e.target.closest('button') || e.target.closest('a') || e.target.closest('.continue-hint')) return;
+    const next = this.dataset.next;
+    const action = this.dataset.action;
+    if (next) goToScene(next);
+    else if (action && typeof window[action] === 'function') window[action]();
+  });
+});
+
+// Mapeamento de cena → clima sonoro
+const SCENE_MOODS = {
+  'scene-title': 'title',
+  'scene-intro-lia': 'intro',
+  'scene-intro-bento': 'intro',
+  'scene-characters': 'characters',
+  'scene-gameplay': 'gameplay-disconnected',
+  'scene-connection': 'connection',
+  'scene-map': 'connection',
+  'scene-fusos-intro': 'connection',
+  'scene-fusos-game': 'fusos',
+  'scene-ruido-intro': 'fusos',
+  'scene-ruido-game': 'ruido',
+  'scene-travessia-intro': 'ruido',
+  'scene-travessia-game': 'travessia',
+  'scene-convergencia': 'convergencia',
+  'scene-encontro-game': 'encontro',
+  'scene-toque': 'toque',
+  'scene-end': 'end'
+};
+
+let isTransitioning = false;
+let currentSceneId = 'scene-title';
+
+function goToScene(sceneId) {
+  // Evita transições duplicadas ou para a mesma cena
+  if (isTransitioning || sceneId === currentSceneId) {
+    debug('goToScene IGNORADO: ' + sceneId + ' (transit=' + isTransitioning + ', curr=' + currentSceneId + ')');
+    return;
+  }
+  debug('goToScene: ' + sceneId);
+  isTransitioning = true;
+  currentSceneId = sceneId;
+
+  document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+  setTimeout(() => {
+    document.getElementById(sceneId).classList.add('active');
+
+    // Reseta visibilidade de overlays de instrução
+    document.querySelectorAll('.instruction-overlay').forEach(o => {
+      o.classList.remove('hidden');
+    });
+    // Auto-esconde overlay da cena ativa após 5 segundos
+    const activeOverlay = document.getElementById(sceneId).querySelector('.instruction-overlay');
+    if (activeOverlay) {
+      setTimeout(() => activeOverlay.classList.add('hidden'), 5500);
+    }
+
+    // Muda clima sonoro
+    if (SCENE_MOODS[sceneId] && AudioEngine.isStarted()) {
+      AudioEngine.setMood(SCENE_MOODS[sceneId]);
+    }
+
+    if (sceneId === 'scene-end') {
+      setTimeout(() => {
+        const egg = document.getElementById('easter-egg');
+        if (egg) egg.classList.add('visible');
+      }, 8000);
+    }
+
+    // Libera trava de transição depois do fade
+    setTimeout(() => { isTransitioning = false; }, 800);
+  }, 100);
+}
+
+function restartGame() {
+  isTransitioning = false;
+  currentSceneId = '';
+  angleLia = -120; angleBento = 120;
+  updateDial('lia', angleLia); updateDial('bento', angleBento);
+  document.getElementById('connection-line').classList.remove('active');
+  connected = false;
+  const egg = document.getElementById('easter-egg');
+  if (egg) egg.classList.remove('visible');
+  goToScene('scene-title');
+}
+
+// FASE 1 — SINTONIA
+const TARGET_FREQ = 88.7;
+const TOLERANCE = 0.4;
+let angleLia = -120, angleBento = 120, connected = false;
+
+function startGameplay() {
+  goToScene('scene-gameplay');
+  setTimeout(() => {
+    const tutorial = document.getElementById('tutorial');
+    tutorial.style.display = 'block';
+    tutorial.style.opacity = '1';
+    tutorial.addEventListener('click', () => {
+      tutorial.style.opacity = '0';
+      setTimeout(() => tutorial.style.display = 'none', 600);
+    }, { once: true });
+  }, 200);
+}
+
+function angleToFreq(a) { return 86.0 + ((a + 120) / 240) * 6.0; }
+
+function updateDial(who, angle) {
+  const pointer = document.getElementById('pointer-' + who);
+  const freqEl = document.getElementById('freq-' + who);
+  const signalEl = document.getElementById('signal-' + who);
+  pointer.style.transform = 'translate(-50%, -100%) rotate(' + angle + 'deg)';
+  const freq = angleToFreq(angle);
+  freqEl.textContent = 'FM ' + freq.toFixed(1);
+  const distance = Math.abs(freq - TARGET_FREQ);
+  signalEl.style.width = (Math.max(0, 1 - (distance / 3.0)) * 100) + '%';
+  checkConnection();
+}
+
+function checkConnection() {
+  const liaAligned = Math.abs(angleToFreq(angleLia) - TARGET_FREQ) < TOLERANCE;
+  const bentoAligned = Math.abs(angleToFreq(angleBento) - TARGET_FREQ) < TOLERANCE;
+  const line = document.getElementById('connection-line');
+  if (liaAligned && bentoAligned && !connected) {
+    connected = true;
+    line.classList.add('active');
+    if (AudioEngine.isStarted()) AudioEngine.setMood('gameplay-connected');
+    setTimeout(() => goToScene('scene-connection'), 1800);
+  } else if (!liaAligned || !bentoAligned) {
+    line.classList.remove('active');
+  }
+}
+
+function setupDial(who) {
+  const dial = document.getElementById('dial-' + who);
+  let isDragging = false, startAngle = 0, startPointerAngle = 0;
+  function getAngleFromCenter(x, y) {
+    const r = dial.getBoundingClientRect();
+    return Math.atan2(y - (r.top + r.height/2), x - (r.left + r.width/2)) * 180/Math.PI + 90;
+  }
+  function clamp(a) { return Math.max(-120, Math.min(120, a)); }
+  function onStart(x, y) {
+    isDragging = true;
+    startPointerAngle = getAngleFromCenter(x, y);
+    startAngle = who === 'lia' ? angleLia : angleBento;
+  }
+  function onMove(x, y) {
+    if (!isDragging) return;
+    let delta = getAngleFromCenter(x, y) - startPointerAngle;
+    if (delta > 180) delta -= 360;
+    if (delta < -180) delta += 360;
+    const newAngle = clamp(startAngle + delta);
+    if (who === 'lia') angleLia = newAngle; else angleBento = newAngle;
+    updateDial(who, newAngle);
+  }
+  function onEnd() { isDragging = false; }
+  dial.addEventListener('mousedown', e => { e.preventDefault(); onStart(e.clientX, e.clientY); });
+  document.addEventListener('mousemove', e => onMove(e.clientX, e.clientY));
+  document.addEventListener('mouseup', onEnd);
+  dial.addEventListener('touchstart', e => { e.preventDefault(); const t = e.touches[0]; onStart(t.clientX, t.clientY); }, { passive: false });
+  document.addEventListener('touchmove', e => { if (!isDragging) return; e.preventDefault(); const t = e.touches[0]; onMove(t.clientX, t.clientY); }, { passive: false });
+  document.addEventListener('touchend', onEnd);
+}
+setupDial('lia'); setupDial('bento');
+updateDial('lia', angleLia); updateDial('bento', angleBento);
+
+// FASE 2 — FUSOS
+let fusosTimer = null, breathTimer = null;
+function startFusos() {
+  goToScene('scene-fusos-game');
+  let s = 10;
+  const counter = document.getElementById('fusos-counter');
+  const breathCircle = document.getElementById('breath-circle');
+  const breathText = document.getElementById('breath-text');
+  const instruction = document.getElementById('fusos-instruction');
+  breathCircle.classList.remove('expanding');
+  counter.textContent = '00:' + s.toString().padStart(2, '0');
+  instruction.textContent = 'Lia mandou a mensagem. Agora ela espera Bento acordar.';
+  let expanding = true;
+  function breathCycle() {
+    if (expanding) { breathCircle.classList.add('expanding'); breathText.textContent = 'INSPIRE'; }
+    else { breathCircle.classList.remove('expanding'); breathText.textContent = 'EXPIRE'; }
+    expanding = !expanding;
+  }
+  breathCycle();
+  breathTimer = setInterval(breathCycle, 4000);
+  fusosTimer = setInterval(() => {
+    s--;
+    counter.textContent = '00:' + s.toString().padStart(2, '0');
+    if (s <= 0) {
+      clearInterval(fusosTimer); clearInterval(breathTimer);
+      breathText.textContent = 'BENTO ACORDOU';
+      instruction.textContent = 'A resposta chegou.';
+      setTimeout(() => goToScene('scene-ruido-intro'), 2400);
+    }
+  }, 1000);
+}
+
+// FASE 3 — RUÍDO (Morse — chave telegráfica)
+// Mecânica: Bento envia palavras em Morse. O jogador toca a chave
+// (curto = ponto, longo = traço) seguindo o padrão visível na tela.
+// Cada palavra completa revela uma frase narrativa.
+
+const MORSE_CODE = {
+  'A': '.-',    'B': '-...',  'C': '-.-.',  'D': '-..',   'E': '.',
+  'F': '..-.',  'G': '--.',   'H': '....',  'I': '..',    'J': '.---',
+  'K': '-.-',   'L': '.-..',  'M': '--',    'N': '-.',    'O': '---',
+  'P': '.--.',  'Q': '--.-',  'R': '.-.',   'S': '...',   'T': '-',
+  'U': '..-',   'V': '...-',  'W': '.--',   'X': '-..-',  'Y': '-.--',
+  'Z': '--..'
+};
+
+const MORSE_WORDS = [
+  { word: 'VIVO',   message: 'Estou vivo. A floresta me protegeu.' },
+  { word: 'ESPERA', message: 'Pensa em mim ao amanhecer.' },
+  { word: 'CHEGO',  message: 'Vou atravessar. Espera por mim.' }
+];
+
+// Tempo limite (ms) entre toque curto e longo
+const MORSE_DOT_MAX = 300; // até 300ms = ponto
+// Acima de 250ms = traço
+
+let morseState = null;
+
+function startRuido() {
+  goToScene('scene-ruido-game');
+  setTimeout(() => initMorse(), 300);
+}
+
+function initMorse() {
+  morseState = {
+    wordIndex: 0,
+    currentLetterIdx: 0,
+    currentSymbolIdx: 0,
+    pressStart: null,
+    isPressing: false
+  };
+  loadMorseWord();
+  setupMorseKey();
+}
+
+function loadMorseWord() {
+  if (!morseState) return;
+  if (morseState.wordIndex >= MORSE_WORDS.length) {
+    // Fim da fase
+    setTimeout(() => {
+      morseState = null;
+      goToScene('scene-travessia-intro');
+    }, 2400);
+    return;
+  }
+
+  const wordData = MORSE_WORDS[morseState.wordIndex];
+  const word = wordData.word;
+  morseState.currentLetterIdx = 0;
+  morseState.currentSymbolIdx = 0;
+  morseState.letters = [];
+
+  // Atualiza o contador de transmissões
+  const targetEl = document.getElementById('morse-counter');
+  if (targetEl) {
+    targetEl.textContent = (morseState.wordIndex + 1) + ' / ' + MORSE_WORDS.length;
+  }
+
+  // Limpa frase revelada
+  const revealedEl = document.getElementById('morse-revealed');
+  if (revealedEl) {
+    revealedEl.classList.remove('visible');
+    revealedEl.textContent = '';
+  }
+
+  // Constrói o padrão visual
+  const patternEl = document.getElementById('morse-pattern');
+  patternEl.innerHTML = '';
+
+  for (let i = 0; i < word.length; i++) {
+    const letter = word[i];
+    const symbols = MORSE_CODE[letter] || '';
+
+    const block = document.createElement('div');
+    block.className = 'morse-letter-block';
+    if (i === 0) block.classList.add('active');
+    block.dataset.idx = i;
+
+    const charEl = document.createElement('div');
+    charEl.className = 'morse-letter-char';
+    charEl.textContent = letter;
+    block.appendChild(charEl);
+
+    const symbolsEl = document.createElement('div');
+    symbolsEl.className = 'morse-letter-symbols';
+    const symbolSpans = [];
+    for (let j = 0; j < symbols.length; j++) {
+      const s = document.createElement('span');
+      s.className = 'morse-symbol';
+      s.textContent = symbols[j] === '.' ? '·' : '—';
+      s.dataset.expected = symbols[j];
+      symbolsEl.appendChild(s);
+      symbolSpans.push(s);
+    }
+    block.appendChild(symbolsEl);
+
+    patternEl.appendChild(block);
+
+    morseState.letters.push({
+      char: letter,
+      symbols: symbols,
+      symbolElements: symbolSpans,
+      blockEl: block,
+      currentIdx: 0,
+      completed: false
+    });
+  }
+}
+
+function setupMorseKey() {
+  const scene = document.getElementById('scene-ruido-game');
+  if (!scene) return;
+
+  // Remove listeners antigos clonando o nó (mas precisamos manter os filhos)
+  // Em vez disso, usamos uma flag pra evitar duplicação
+  if (scene.dataset.morseSetup === 'true') return;
+  scene.dataset.morseSetup = 'true';
+
+  function onPressStart(e) {
+    if (!morseState) return;
+    // Ignora cliques fora da cena ativa ou em elementos UI específicos
+    if (!scene.classList.contains('active')) return;
+    if (e.target.closest('#audio-toggle')) return;
+    e.preventDefault();
+    if (morseState.isPressing) return;
+    morseState.isPressing = true;
+    morseState.pressStart = Date.now();
+    scene.classList.add('pressing');
+  }
+
+  function onPressEnd(e) {
+    if (!morseState || !morseState.isPressing) return;
+    e.preventDefault();
+    const duration = Date.now() - morseState.pressStart;
+    morseState.isPressing = false;
+    morseState.pressStart = null;
+    scene.classList.remove('pressing');
+
+    const symbol = duration < MORSE_DOT_MAX ? '.' : '-';
+    processMorseInput(symbol);
+  }
+
+  scene.addEventListener('mousedown', onPressStart);
+  scene.addEventListener('touchstart', onPressStart, { passive: false });
+  scene.addEventListener('mouseup', onPressEnd);
+  scene.addEventListener('mouseleave', onPressEnd);
+  scene.addEventListener('touchend', onPressEnd);
+  scene.addEventListener('touchcancel', onPressEnd);
+}
+
+function processMorseInput(symbol) {
+  if (!morseState) return;
+  const letter = morseState.letters[morseState.currentLetterIdx];
+  if (!letter || letter.completed) return;
+
+  const expected = letter.symbols[letter.currentIdx];
+
+  if (symbol === expected) {
+    // Acertou o símbolo
+    letter.symbolElements[letter.currentIdx].classList.add('lit');
+    letter.currentIdx++;
+
+    // Completou a letra?
+    if (letter.currentIdx >= letter.symbols.length) {
+      letter.completed = true;
+      letter.blockEl.classList.add('completed');
+      letter.blockEl.classList.remove('active');
+
+      // Próxima letra
+      morseState.currentLetterIdx++;
+      const next = morseState.letters[morseState.currentLetterIdx];
+      if (next) {
+        next.blockEl.classList.add('active');
+      } else {
+        // Palavra completa!
+        completeMorseWord();
+      }
+    }
+  } else {
+    // Errou: pisca o bloco em vermelho e reseta a letra atual
+    letter.blockEl.style.background = 'rgba(150, 50, 50, 0.25)';
+    setTimeout(() => {
+      if (letter.blockEl) letter.blockEl.style.background = '';
+    }, 400);
+    // Reseta o progresso da letra
+    letter.symbolElements.forEach(s => s.classList.remove('lit'));
+    letter.currentIdx = 0;
+  }
+}
+
+function completeMorseWord() {
+  if (!morseState) return;
+  const wordData = MORSE_WORDS[morseState.wordIndex];
+
+  const revealedEl = document.getElementById('morse-revealed');
+  if (revealedEl) {
+    revealedEl.textContent = wordData.message;
+    revealedEl.classList.add('visible');
+  }
+
+  // Atualiza instrução
+  const instructionEl = document.getElementById('morse-instruction');
+  if (instructionEl) {
+    if (morseState.wordIndex < MORSE_WORDS.length - 1) {
+      setTimeout(() => {
+        if (instructionEl) instructionEl.textContent = 'Outra transmissão chegando...';
+      }, 1800);
+    }
+  }
+
+  // Avança pra próxima palavra após pausa
+  setTimeout(() => {
+    if (!morseState) return;
+    morseState.wordIndex++;
+    if (instructionEl && morseState.wordIndex < MORSE_WORDS.length) {
+      instructionEl.textContent = 'Bento está transmitindo. Reproduza o sinal pra confirmar que recebeu.';
+    }
+    loadMorseWord();
+  }, 3200);
+}
+
+// FASE 4 — TRAVESSIA
+const TRAVESSIA_TOTAL_KM = 1547;
+const TRAVESSIA_DURATION_MS = 12000;
+const TRAVESSIA_THOUGHTS = [
+  '"Quantos quilômetros são uma decisão?"',
+  '"Nada pesa mais que o silêncio dele em mim."',
+  '"Falta menos do que parece."'
+];
+let travessiaElapsed = 0, travessiaActive = false, travessiaInterval = null, currentThoughtIdx = -1;
+
+function startTravessia() {
+  goToScene('scene-travessia-game');
+  travessiaElapsed = 0; currentThoughtIdx = -1; travessiaActive = false;
+  document.getElementById('travessia-bar').style.width = '0%';
+  document.getElementById('travessia-km').textContent = '0 / 1.547 KM';
+  document.getElementById('travessia-thought').classList.remove('visible');
+  setupTravessiaTouch();
+}
+
+function setupTravessiaTouch() {
+  const zone = document.getElementById('travessia-touch');
+  function onStart(e) {
+    e.preventDefault();
+    travessiaActive = true;
+    zone.classList.add('active');
+    if (!travessiaInterval) travessiaInterval = setInterval(travessiaTick, 50);
+  }
+  function onEnd() { travessiaActive = false; zone.classList.remove('active'); }
+  zone.addEventListener('touchstart', onStart, { passive: false });
+  zone.addEventListener('touchend', onEnd);
+  zone.addEventListener('touchcancel', onEnd);
+  zone.addEventListener('mousedown', onStart);
+  zone.addEventListener('mouseup', onEnd);
+  zone.addEventListener('mouseleave', onEnd);
+}
+
+function travessiaTick() {
+  if (travessiaActive) {
+    travessiaElapsed += 50;
+    const progress = Math.min(1, travessiaElapsed / TRAVESSIA_DURATION_MS);
+    const km = Math.floor(progress * TRAVESSIA_TOTAL_KM);
+    document.getElementById('travessia-bar').style.width = (progress * 100) + '%';
+    document.getElementById('travessia-km').textContent = km.toLocaleString('pt-BR') + ' / 1.547 KM';
+
+    const thoughtProgress = Math.floor((travessiaElapsed / 1000) / 3.5);
+    if (thoughtProgress !== currentThoughtIdx && thoughtProgress < TRAVESSIA_THOUGHTS.length) {
+      currentThoughtIdx = thoughtProgress;
+      const t = document.getElementById('travessia-thought');
+      t.classList.remove('visible');
+      setTimeout(() => {
+        t.textContent = TRAVESSIA_THOUGHTS[currentThoughtIdx];
+        t.classList.add('visible');
+      }, 400);
+    }
+
+    if (progress >= 1) {
+      clearInterval(travessiaInterval);
+      travessiaInterval = null;
+      const t = document.getElementById('travessia-thought');
+      t.classList.remove('visible');
+      setTimeout(() => {
+        t.textContent = '"Cheguei."';
+        t.classList.add('visible');
+      }, 600);
+      setTimeout(() => goToScene('scene-convergencia'), 3500);
+    }
+  }
+}
+
+// FASE 5 — ENCONTRO (estilo Duolingo: toque na palavra, vai pra frase)
+const ENCONTRO_LINES = [
+  { speaker: 'lia',   words: ['Você', 'é', 'menor', 'do que', 'eu', 'imaginei.'] },
+  { speaker: 'bento', words: ['Você', 'é', 'mais', 'velho.'] },
+  { speaker: 'lia',   words: ['Você', 'é', 'tudo.'] }
+];
+let encontroLineIndex = 0;
+let encontroAnswer = []; // palavras escolhidas em ordem
+let encontroExpected = []; // palavras esperadas em ordem
+
+function startEncontro() {
+  goToScene('scene-encontro-game');
+  encontroLineIndex = 0;
+  // Limpa todas as linhas
+  ['line-1', 'line-2', 'line-3'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = '';
+  });
+  setTimeout(buildEncontroLine, 400);
+}
+
+function buildEncontroLine() {
+  if (encontroLineIndex >= ENCONTRO_LINES.length) {
+    setTimeout(() => goToScene('scene-toque'), 2400);
+    return;
+  }
+
+  const line = ENCONTRO_LINES[encontroLineIndex];
+  encontroExpected = [...line.words];
+  encontroAnswer = new Array(line.words.length).fill(null);
+
+  renderEncontroLine();
+
+  // Embaralha as palavras pro banco
+  const shuffled = [...line.words];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+
+  renderWordBank(shuffled);
+}
+
+function renderEncontroLine() {
+  // Renderiza a frase com slots clicáveis (palavras já posicionadas)
+  const lineEl = document.getElementById('line-' + (encontroLineIndex + 1));
+  if (!lineEl) return;
+  lineEl.innerHTML = '— ';
+
+  for (let i = 0; i < encontroExpected.length; i++) {
+    const slot = document.createElement('span');
+    slot.className = 'duo-slot';
+    slot.dataset.idx = i;
+
+    if (encontroAnswer[i]) {
+      // Tem palavra preenchida
+      slot.textContent = encontroAnswer[i];
+      slot.classList.add('filled');
+      slot.addEventListener('click', () => removeWordFromSlot(i));
+    } else {
+      // Slot vazio
+      slot.innerHTML = '\u00A0\u00A0\u00A0\u00A0';
+    }
+
+    lineEl.appendChild(slot);
+    if (i < encontroExpected.length - 1) {
+      lineEl.appendChild(document.createTextNode(' '));
+    }
+  }
+}
+
+function renderWordBank(shuffledWords) {
+  const wordsArea = document.getElementById('encontro-words');
+  if (!wordsArea) return;
+  wordsArea.innerHTML = '';
+
+  shuffledWords.forEach((word, idx) => {
+    const el = document.createElement('div');
+    el.className = 'duo-word';
+    el.textContent = word;
+    el.dataset.word = word;
+
+    // Marca como usada se já está em algum slot
+    if (encontroAnswer.includes(word)) {
+      // Mas só marca a primeira ocorrência - pode ter palavras repetidas
+      const usedCount = encontroAnswer.filter(w => w === word).length;
+      const idxInBank = shuffledWords.slice(0, idx + 1).filter(w => w === word).length;
+      if (idxInBank <= usedCount) {
+        el.classList.add('used');
+      }
+    }
+
+    el.addEventListener('click', () => placeWordInNextSlot(el, word));
+    wordsArea.appendChild(el);
+  });
+}
+
+function placeWordInNextSlot(wordEl, word) {
+  if (wordEl.classList.contains('used')) return;
+
+  // Acha o próximo slot vazio
+  const nextEmptyIdx = encontroAnswer.indexOf(null);
+  if (nextEmptyIdx === -1) return;
+
+  encontroAnswer[nextEmptyIdx] = word;
+  wordEl.classList.add('used');
+
+  renderEncontroLine();
+
+  // Verifica se completou
+  if (!encontroAnswer.includes(null)) {
+    checkEncontroAnswer();
+  }
+}
+
+function removeWordFromSlot(slotIdx) {
+  const word = encontroAnswer[slotIdx];
+  if (!word) return;
+
+  encontroAnswer[slotIdx] = null;
+  renderEncontroLine();
+
+  // Libera UMA ocorrência da palavra no banco (pega a primeira used que match)
+  const wordsArea = document.getElementById('encontro-words');
+  if (!wordsArea) return;
+  const wordEls = wordsArea.querySelectorAll('.duo-word.used');
+  for (let el of wordEls) {
+    if (el.dataset.word === word) {
+      el.classList.remove('used');
+      break;
+    }
+  }
+}
+
+function checkEncontroAnswer() {
+  const correct = encontroAnswer.every((w, i) => w === encontroExpected[i]);
+
+  if (correct) {
+    // Marca slots como certos
+    document.querySelectorAll('#line-' + (encontroLineIndex + 1) + ' .duo-slot').forEach(s => {
+      s.classList.add('correct');
+    });
+
+    encontroLineIndex++;
+    setTimeout(buildEncontroLine, 1600);
+  } else {
+    // Pisca em vermelho e libera tudo após delay
+    document.querySelectorAll('#line-' + (encontroLineIndex + 1) + ' .duo-slot.filled').forEach(s => {
+      s.classList.add('incorrect');
+    });
+
+    setTimeout(() => {
+      // Reseta a linha
+      encontroAnswer = new Array(encontroExpected.length).fill(null);
+      const wordsArea = document.getElementById('encontro-words');
+      if (wordsArea) {
+        wordsArea.querySelectorAll('.duo-word.used').forEach(el => el.classList.remove('used'));
+      }
+      renderEncontroLine();
+    }, 900);
+  }
+}
+
+</script>
+
+
+
+</body></html>
