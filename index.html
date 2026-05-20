@@ -91,22 +91,50 @@ section{scroll-margin-top:64px;padding:6rem 3rem;border-bottom:1px solid var(--b
 .projects-intro{font-size:15px;color:var(--muted);max-width:520px;margin-bottom:3.5rem;line-height:1.8;}
 /* GALERIA HORIZONTAL — scroll snap, sem barras feias */
 .projects-gallery{
-  display:flex;
-  gap:2rem;
-  overflow-x:auto;
-  overflow-y:hidden;
-  scroll-snap-type:x mandatory;
-  -webkit-overflow-scrolling:touch;
-  scrollbar-width:none;
-  padding:1rem 1.25rem 2rem;
-  margin:0 -1.25rem;
-  scroll-padding-left:1.25rem;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1.5rem;
+  padding:1.5rem 0 2rem;
 }
-.projects-gallery::-webkit-scrollbar{display:none;}
+
+/* Linha 2: 3 cards centrados */
+.project-item:nth-child(5),
+.project-item:nth-child(6),
+.project-item:nth-child(7){
+  grid-column:auto;
+}
+.projects-gallery.has-7 .project-item:nth-child(5){
+  grid-column:2;
+}
+
+/* Contador de projetos */
+.projects-counter{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:2rem;
+}
+.projects-counter-dots{
+  display:flex;gap:6px;
+}
+.projects-counter-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--border-md);
+  transition:background .25s,transform .25s;
+}
+.projects-counter-dot.active{
+  background:var(--accent);
+  transform:scale(1.3);
+}
+.projects-counter-label{
+  font-family:var(--mono);font-size:10px;
+  letter-spacing:.12em;color:var(--muted);
+  text-transform:uppercase;
+}
 /* Card de cada projeto: mockup em cima + infos embaixo, largura fixa */
 .project-item{
-  flex:0 0 400px;
-  scroll-snap-align:start;
+  
+  
   display:flex;
   flex-direction:column;
   gap:2rem;
@@ -297,9 +325,22 @@ img,video{max-width:100%;height:auto;}
   .section-title{font-size:clamp(1.6rem,6vw,2.4rem);}
   .section-label{font-size:9px;}
   .about-text p{font-size:14px;}
-  /* Em mobile: galeria vira coluna empilhada, sem scroll horizontal */
-  .projects-gallery{flex-direction:column;overflow:visible;scroll-snap-type:none;padding:0;margin:0;gap:1.5rem;}
-  .project-item{flex:1 1 auto;width:100%;padding:1.75rem;scroll-snap-align:none;}
+  /* Mobile: scroll horizontal */
+  .projects-gallery{
+    display:flex;flex-direction:row;
+    overflow-x:auto;overflow-y:hidden;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    padding:0 1.25rem 1.5rem;
+    margin:0 -1.25rem;
+    gap:1.25rem;
+  }
+  .projects-gallery::-webkit-scrollbar{display:none;}
+  /* Anula nth-child do grid no mobile */
+  .projects-gallery.has-7 .project-item:nth-child(5){grid-column:auto;}
+  .project-item{flex:0 0 85vw;width:85vw;max-width:340px;padding:1.5rem;}
+  .projects-counter{display:none;}
   .project-title{font-size:1.5rem;}
   .project-desc{font-size:13.5px;}
   .project-badge{margin-left:6px;font-size:8px;padding:3px 8px;}
@@ -420,7 +461,19 @@ img,video{max-width:100%;height:auto;}
     <p class="projects-intro">Sete projetos proprietários criados por mim do zero — concepção, design, produto e desenvolvimento. Obra Certa disponível por assinatura; Neuro Lens, Convergir, Oráculo Pessoal, BIA e Operação Horizonte com acesso gratuito ou demo. SensoryShield em fase de captação.</p>
   </div>
 
-  <div class="projects-gallery" role="region" aria-label="Galeria de apps">
+  <div class="projects-counter" aria-hidden="true">
+    <div class="projects-counter-dots">
+      <div class="projects-counter-dot active"></div>
+      <div class="projects-counter-dot active"></div>
+      <div class="projects-counter-dot active"></div>
+      <div class="projects-counter-dot active"></div>
+      <div class="projects-counter-dot active"></div>
+      <div class="projects-counter-dot active"></div>
+      <div class="projects-counter-dot active"></div>
+    </div>
+    <span class="projects-counter-label">7 projetos</span>
+  </div>
+  <div class="projects-gallery has-7" role="region" aria-label="Galeria de apps">
 
   <!-- 01 OBRA CERTA -->
   <article class="project-item reveal" aria-labelledby="proj1-title">
@@ -688,14 +741,17 @@ img,video{max-width:100%;height:auto;}
         <h3 class="exp-role">Designer Gráfica &amp; Product Owner</h3>
         <p class="exp-subtitle">Concepção, design e produto de apps proprietários</p>
         <ul class="exp-bullets">
-          <li>Criação integral de quatro apps proprietários — concepção, design, produto e desenvolvimento: <strong>Obra Certa</strong> (SaaS B2B por assinatura), <strong>Neuro Lens</strong> (triagem TEA/TDAH, gratuito), <strong>Convergir</strong> (narrativa interativa, demo gratuita) e <strong>Oráculo Pessoal</strong> (entretenimento, gratuito)</li>
-          <li>Design e produto para clientes em diferentes setores, com foco em tecnologia acessível e produtos digitais com propósito</li>
+          <li>Criação integral de sete projetos proprietários - concepção, design, produto e desenvolvimento: <strong>Obra Certa</strong> (SaaS B2B por assinatura), <strong>Neuro Lens</strong> (triagem TEA/TDAH, gratuito), <strong>Convergir</strong> (narrativa interativa, demo gratuita), <strong>Oráculo Pessoal</strong> (entretenimento, gratuito), <strong>BIA</strong> (acompanhamento terapêutico para adolescentes neurodivergentes, demo), <strong>Operação Horizonte</strong> (gamificação de rotina para crianças neurodivergentes, demo) e <strong>SensoryShield</strong> (marca de roupas para alta sensibilidade sensorial, em captação de investimentos)</li>
+          <li>Formação como Acompanhante Terapêutica com abordagem ABA, com foco em TEA e TDAH - com orientação pontual da <strong>Talita Rocha</strong>, neuropsicóloga, especialista em ABA e TCC, e professora universitária nas faculdades UNA e UNITRI em Uberlândia</li>
+          <li>Design e produto com foco em tecnologia acessível, saúde mental, neurodivergência e impacto social</li>
         </ul>
         <div class="exp-chips">
           <span class="exp-chip">Apps com IA</span>
           <span class="exp-chip">Construção de produto</span>
+          <span class="exp-chip">ABA / TEA / TDAH</span>
+          <span class="exp-chip">Saúde mental</span>
+          <span class="exp-chip">Wearable tech</span>
           <span class="exp-chip">UX Writing</span>
-          <span class="exp-chip">Onboarding digital</span>
           <span class="exp-chip">Builder</span>
         </div>
       </div>
@@ -995,3 +1051,4 @@ document.querySelectorAll('.reveal').forEach((el,i)=>{
 </script>
 </body>
 </html>
+
