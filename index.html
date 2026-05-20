@@ -445,8 +445,11 @@ img,video{max-width:100%;height:auto;}
                 <svg width="16" height="8" viewBox="0 0 25 11" fill="none"><rect x="0.5" y="0.5" width="21" height="10" rx="2.5" stroke="#fff" stroke-opacity="0.5" fill="none"/><rect x="2" y="2" width="18" height="7" rx="1" fill="#fff"/><rect x="22.5" y="3.5" width="1.5" height="4" rx="0.7" fill="#fff" fill-opacity="0.5"/></svg>
               </span>
             </div>
-            <div class="device-slides">
+            <div class="device-slides" id="obracerta-slides">
               <div class="device-slide active"><img src="assets/obracerta_1.webp" alt="" loading="lazy"/></div>
+              <div class="device-slide"><img src="assets/obracerta_2.webp" alt="" loading="lazy"/></div>
+              <div class="device-slide"><img src="assets/obracerta_3.webp" alt="" loading="lazy"/></div>
+              <div class="device-slide"><img src="assets/obracerta_4.webp" alt="" loading="lazy"/></div>
             </div>
           </div>
         </div>
@@ -477,8 +480,11 @@ img,video{max-width:100%;height:auto;}
                 <svg width="16" height="8" viewBox="0 0 25 11" fill="none"><rect x="0.5" y="0.5" width="21" height="10" rx="2.5" stroke="#fff" stroke-opacity="0.5" fill="none"/><rect x="2" y="2" width="18" height="7" rx="1" fill="#fff"/><rect x="22.5" y="3.5" width="1.5" height="4" rx="0.7" fill="#fff" fill-opacity="0.5"/></svg>
               </span>
             </div>
-            <div class="device-slides">
+            <div class="device-slides" id="neurolens-slides">
               <div class="device-slide active"><img src="assets/neurolens_1.webp" alt="" loading="lazy"/></div>
+              <div class="device-slide"><img src="assets/neurolens_2.webp" alt="" loading="lazy"/></div>
+              <div class="device-slide"><img src="assets/neurolens_3.webp" alt="" loading="lazy"/></div>
+              <div class="device-slide"><img src="assets/neurolens_4.webp" alt="" loading="lazy"/></div>
             </div>
           </div>
         </div>
@@ -509,8 +515,12 @@ img,video{max-width:100%;height:auto;}
                 <svg width="16" height="8" viewBox="0 0 25 11" fill="none"><rect x="0.5" y="0.5" width="21" height="10" rx="2.5" stroke="#fff" stroke-opacity="0.5" fill="none"/><rect x="2" y="2" width="18" height="7" rx="1" fill="#fff"/><rect x="22.5" y="3.5" width="1.5" height="4" rx="0.7" fill="#fff" fill-opacity="0.5"/></svg>
               </span>
             </div>
-            <div class="device-slides">
+            <div class="device-slides" id="convergir-slides">
               <div class="device-slide active"><img src="assets/convergir_1.webp" alt="" loading="lazy"/></div>
+              <div class="device-slide"><img src="assets/convergir_2.webp" alt="" loading="lazy"/></div>
+              <div class="device-slide"><img src="assets/convergir_3.webp" alt="" loading="lazy"/></div>
+              <div class="device-slide"><img src="assets/convergir_4.webp" alt="" loading="lazy"/></div>
+              <div class="device-slide"><img src="assets/convergir_5.webp" alt="" loading="lazy"/></div>
             </div>
           </div>
         </div>
@@ -541,8 +551,13 @@ img,video{max-width:100%;height:auto;}
                 <svg width="16" height="8" viewBox="0 0 25 11" fill="none"><rect x="0.5" y="0.5" width="21" height="10" rx="2.5" stroke="#fff" stroke-opacity="0.5" fill="none"/><rect x="2" y="2" width="18" height="7" rx="1" fill="#fff"/><rect x="22.5" y="3.5" width="1.5" height="4" rx="0.7" fill="#fff" fill-opacity="0.5"/></svg>
               </span>
             </div>
-            <div class="device-slides">
-              <div class="device-slide active"><img src="assets/oraculo_2.webp" alt="" loading="lazy"/></div>
+            <div class="device-slides" id="oraculo-slides">
+              <div class="device-slide active"><img src="assets/oraculo_1.webp" alt="" loading="lazy"/></div>
+              <div class="device-slide"><img src="assets/oraculo_2.webp" alt="" loading="lazy"/></div>
+              <div class="device-slide"><img src="assets/oraculo_3.webp" alt="" loading="lazy"/></div>
+              <div class="device-slide"><img src="assets/oraculo_4.webp" alt="" loading="lazy"/></div>
+              <div class="device-slide"><img src="assets/oraculo_5.webp" alt="" loading="lazy"/></div>
+              <div class="device-slide"><img src="assets/oraculo_6.webp" alt="" loading="lazy"/></div>
             </div>
           </div>
         </div>
@@ -930,18 +945,51 @@ document.querySelectorAll('.reveal').forEach((el,i)=>{
 
 // SLIDE AUTOPLAY — percorre slides automaticamente nos cards com múltiplos slides
 (function(){
-  var slideSets = ['bia-slides','horizonte-slides','ss-slides'];
-  slideSets.forEach(function(id){
-    var container = document.getElementById(id);
+  // Autoplay em todos os cards com múltiplos slides
+  var slideSets = [
+    {id:'obracerta-slides',  ms:2400},
+    {id:'neurolens-slides',  ms:2400},
+    {id:'convergir-slides',  ms:2400},
+    {id:'oraculo-slides',    ms:2400},
+    {id:'bia-slides',        ms:2200},
+    {id:'horizonte-slides',  ms:2200},
+    {id:'ss-slides',         ms:2500}
+  ];
+
+  slideSets.forEach(function(s){
+    var container = document.getElementById(s.id);
     if(!container) return;
     var slides = container.querySelectorAll('.device-slide');
     if(slides.length < 2) return;
     var current = 0;
-    setInterval(function(){
+    var timer;
+
+    function goTo(n){
       slides[current].classList.remove('active');
-      current = (current + 1) % slides.length;
+      current = (n + slides.length) % slides.length;
       slides[current].classList.add('active');
-    }, 2200);
+    }
+
+    function startAuto(){
+      timer = setInterval(function(){ goTo(current + 1); }, s.ms);
+    }
+
+    function stopAuto(){
+      clearInterval(timer);
+    }
+
+    startAuto();
+
+    // Clique no device avança o slide — comportamento natural no desktop
+    var wrap = container.closest('.mockup-wrap');
+    if(wrap){
+      wrap.style.cursor = 'pointer';
+      wrap.addEventListener('click', function(){
+        stopAuto();
+        goTo(current + 1);
+        startAuto();
+      });
+    }
   });
 })();
 </script>
