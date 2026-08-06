@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jessica Block · Portfolio</title>
-<meta name="description" content="Designer Gráfica · Product Owner · Builder. Apps proprietários, design estratégico e produtos digitais com propósito.">
+<meta name="description" content="Product Manager & Builder specializing in mental health technology and neurodivergent-focused solutions. 15+ years in product design, strategy, and AI-powered development.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
@@ -17,16 +17,16 @@ html{scroll-behavior:smooth;}
    bg #0a0a08  ↔  muted #b9b3a4 →  ~10.4:1 (AAA)
 */
 :root{
-  --bg:#0a0a0a;
-  --bg2:#111111;
-  --surface:#1a1a1a;
-  --surface-2:#242424;
-  --border:rgba(255,255,255,0.08);
-  --border-md:rgba(255,255,255,0.15);
-  --text:#ffffff;
-  --muted:#d0d0d0;
-  --accent:#d4d4d4;
-  --accent2:#b3b3b3;
+  --bg:#0a0a08;
+  --bg2:#111110;
+  --surface:#1a1a17;
+  --surface-2:#22221e;
+  --border:rgba(255,255,255,0.10);
+  --border-md:rgba(255,255,255,0.20);
+  --text:#f2efe6;
+  --muted:#b9b3a4;
+  --accent:#d4c39a;
+  --accent2:#a89970;
   --nav-bg:rgba(10,10,8,0.94);
   --mono:'DM Mono',monospace;
   --sans:'DM Sans',sans-serif;
@@ -50,7 +50,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content
 .hero{position:relative;min-height:100vh;display:flex;align-items:flex-end;border-bottom:1px solid var(--border);overflow:hidden;}
 .hero-photo{position:absolute;top:0;right:0;bottom:0;width:48%;max-width:540px;}
 .hero-photo img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
-.hero-photo-fade{position:absolute;inset:0;background:linear-gradient(to right,var(--bg) 0%,rgba(10,10,10,.7) 40%,transparent 100%);}
+.hero-photo-fade{position:absolute;inset:0;background:linear-gradient(to right,var(--bg) 0%,rgba(10,10,8,.8) 52%,rgba(10,10,8,.1) 100%);}
 .hero-content{position:relative;z-index:2;padding:9rem 3rem 5rem;max-width:580px;}
 .hero-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--accent);text-transform:uppercase;margin-bottom:2rem;opacity:0;animation:fadeUp .7s .2s ease forwards;}
 .hero-name{font-family:var(--serif);font-size:clamp(3.5rem,8vw,8rem);line-height:.95;font-weight:700;letter-spacing:-.02em;opacity:0;animation:fadeUp .7s .4s ease forwards;}
@@ -318,7 +318,6 @@ img,video{max-width:100%;height:auto;}
   section{padding:4rem 1.25rem;}
   .section-title{font-size:clamp(1.6rem,6vw,2.4rem);}
   .section-label{font-size:9px;}
-  .about-grid{grid-template-columns:1fr !important;gap:2rem !important;}
   .about-text p{font-size:14px;}
   /* Mobile: scroll horizontal */
   .projects-gallery{
@@ -378,6 +377,11 @@ img,video{max-width:100%;height:auto;}
 
 
 </style>
+<meta property="og:title" content="Jessica Block · Product Manager for Mental Health & Neurodivergence">
+<meta property="og:description" content="Product Manager & Builder specializing in mental health technology and solutions for neurodivergent communities. 15+ years experience, ABA certification, 8 proprietary applications.">
+<meta property="og:url" content="https://jessicatwblock-hub.github.io/portfolio/">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://jessicatwblock-hub.github.io/portfolio/">
 </head>
 <body>
 
@@ -395,21 +399,20 @@ img,video{max-width:100%;height:auto;}
 <!-- HERO -->
 <header class="hero" id="main">
   <div class="hero-photo" aria-hidden="true">
-    <img src="assets/jessicablock.png" alt="" loading="eager" />
+    <img src="assets/jess.jpg" alt="" loading="eager" />
     <div class="hero-photo-fade"></div>
   </div>
   <div class="hero-content">
-    <p class="hero-eyebrow">✦ Designer · Product Owner · Builder</p>
+    <p class="hero-eyebrow">✦ Product Manager · Designer · Builder</p>
     <h1 class="hero-name">Jessica<br><em>Block.</em></h1>
-    <p class="hero-tagline">Design, produto e tecnologia com propósito. No cruzamento entre clareza visual, gestão de produto e construção de ferramentas digitais, há mais de 15 anos.</p>
+    <p class="hero-tagline">Product for mental health and neurodiversity. 15+ years designing systems, managing products, and building tools with intention and impact.</p>
     <div class="hero-actions">
       <a href="#projetos" class="hero-btn primary">Ver projetos</a>
       <a href="mailto:jessicatwblock@gmail.com" class="hero-btn">Entrar em contato</a>
     </div>
     <div class="hero-badges">
-      <span class="hero-badge">Uberlândia, MG</span>
-      <span class="hero-badge">Remoto</span>
-      <span class="hero-badge">Brasil · Europa · EUA</span>
+      <span class="hero-badge">Uberlândia, MG · Brasil</span>
+      <span class="hero-badge">Open to remote</span>
     </div>
   </div>
 </header>
@@ -437,16 +440,13 @@ img,video{max-width:100%;height:auto;}
 <!-- SOBRE -->
 <section id="sobre" aria-labelledby="sobre-title">
   <div class="section-label" aria-hidden="true">01 / Sobre</div>
-  <div class="about-grid" style="display: grid; grid-template-columns: 420px 1fr; gap: 2.5rem; align-items: center;">
-    <div style="width: 100%; aspect-ratio: 9/16; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);">
-      <iframe width="100%" height="100%" src="https://www.youtube.com/embed/BaQXm7XMDn4" title="Jessica Block - Apresentação" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="display: block; width: 100%; height: 100%;"></iframe>
-    </div>
-    <div class="about-text" style="display: flex; flex-direction: column; gap: 1.2rem;">
-      <h2 class="section-title" id="sobre-title" style="margin: 0;">Design com <em>intenção</em>.<br>Produto com propósito.</h2>
-      <p style="margin: 0;">I'm a Product Manager, Product Owner, Builder, Instructional Designer, and Graphic Designer with experience in EdTech, SaaS B2B, and digital products. I have a strategic mindset for visual communication, product management, and building tools with AI.</p>
-      <p style="margin: 0;">Tenho interesse particular em produtos voltados à saúde mental e neurodivergência, área em que criei o Neuro Lens, app proprietário de triagem para TEA e TDAH baseado no DSM-5, desenvolvido por mim do zero.</p>
-      <p style="margin: 0;">Tenho mais de 15 anos entre design gráfico, design instrucional, EdTech e gestão de produto. Na Dialog, fui <strong>Coordenadora da Área de Produtos Digitais e Product Owner simultaneamente</strong>, liderando equipe e cuidando do operacional do produto ao mesmo tempo, em uma plataforma SaaS B2B com IA. Atuei por anos como Designer Instrucional criando programas educacionais para empresas como Itaú-Unibanco, Nestlé e Bayer.</p>
-      <p style="margin: 0;">Uso IA como ferramenta de criação e construção. Os projetos abaixo são apps proprietários que concebi, desenhei e desenvolvi por completo, do zero.</p>
+  <div class="about-grid">
+    <div class="about-text">
+      <h2 class="section-title" id="sobre-title">Product for mental health <em>&</em> neurodiversity.</h2>
+      <p><strong>PT-BR:</strong> Design, produto e tecnologia com propósito — especializada em saúde mental e tecnologias para neurodivergência. No cruzamento entre estratégia visual, gestão de produto e construção de ferramentas digitais, há mais de 15 anos.</p>
+      <p><strong>EN:</strong> I'm a Product Manager and Builder with 15+ years designing systems, leading product teams, and building technology solutions. Specialized in mental health tech and solutions for neurodivergent communities. Recently completed ABA certification (40-hour intensive, April 2026) specializing in behavioral intervention for neurodivergent populations; now applying these clinical principles to product design and user experience strategy.</p>
+      <p>My work spans: Product Strategy & Roadmapping, User Experience Design, Instructional Design, Brand Development, and Full-Stack Product Development using AI as core toolkit. I built 8 proprietary applications solo—from conception through deployment—learning technical stack (GitHub, Next.js, Supabase, etc.) independently via AI-assisted development.</p>
+      <p>Fluent in Portuguese & English. Based in Brazil, open to remote roles globally.</p>
     </div>
   </div>
 </section>
@@ -780,75 +780,22 @@ img,video{max-width:100%;height:auto;}
         <span class="exp-company">Projetos Independentes (J.BLK)</span>
       </div>
       <div>
-        <h3 class="exp-role">Designer Gráfica &amp; Product Owner</h3>
-        <p class="exp-subtitle">Concepção, design e produto de apps proprietários</p>
+        <h3 class="exp-role">Product Manager &amp; Builder</h3>
+        <p class="exp-subtitle">Saúde Mental &amp; Neurodivergência</p>
         <ul class="exp-bullets">
-          <li>Criação integral de oito projetos proprietários - concepção, design, produto e desenvolvimento: <strong>Obra Certa</strong> (SaaS B2B por assinatura), <strong>Neuro Lens</strong> (triagem TEA/TDAH, gratuito), <strong>Convergir</strong> (narrativa interativa, demo gratuita), <strong>Oráculo Pessoal</strong> (entretenimento, gratuito), <strong>BIA</strong> (acompanhamento terapêutico para adolescentes neurodivergentes, demo), <strong>Operação Horizonte</strong> (gamificação de rotina para crianças neurodivergentes, demo), <strong>SensoryShield</strong> (marca de roupas para alta sensibilidade sensorial, em captação de investimentos) e <strong>The Fault Line</strong> (álbum conceitual, projeto autoral gratuito)</li>
-          <li>Formação como Acompanhante Terapêutica com abordagem ABA, com foco em TEA e TDAH - com orientação pontual da <strong>Talita Rocha</strong>, neuropsicóloga, especialista em ABA e TCC, e professora universitária nas faculdades UNA e UNITRI em Uberlândia</li>
-          <li>Design e produto com foco em tecnologia acessível, saúde mental, neurodivergência e impacto social</li>
+          <li>Arquitetura e execução integral (concepção, design, produto, desenvolvimento) de 8 aplicativos: <strong>Obra Certa</strong> (SaaS B2B construção civil), <strong>Neuro Lens</strong> (triagem DSM-5 TEA/TDAH), <strong>Convergir</strong> (narrativa interativa imersiva), <strong>Oráculo Pessoal</strong> (IA generativa), <strong>BIA</strong> (acompanhamento terapêutico adolescentes), <strong>Operação Horizonte</strong> (gamificação de rotina), <strong>SensoryShield</strong> (moda inclusiva, em captação), <strong>The Fault Line</strong> (álbum conceitual web). Todas desenvolvidas com IA como ferramenta central de prototipagem e código.</li>
+          <li>Desenvolvimento autônomo de stack técnico (GitHub, Next.js, Supabase, Lovable, Manus.space, ElevenLabs, Gemini API) sem mentor prévio. IA utilizada como ferramenta integrada de aprendizado, prototipagem e desenvolvimento.</li>
+          <li>Certificação oficial em Análise do Comportamento Aplicada (Instituto Talita Rocha, 40 horas, Abr 2026) com foco em intervenção comportamental para TEA/TDAH; aplicação direta em design de BIA e Operação Horizonte.</li>
+          <li>Enfoque estratégico: Saúde mental, neurodivergência, tecnologia acessível, impacto social. Transição planejada para mestrado em Psicologia (2027).</li>
         </ul>
         <div class="exp-chips">
           <span class="exp-chip">Apps com IA</span>
-          <span class="exp-chip">Construção de produto</span>
+          <span class="exp-chip">Produto autônomo</span>
           <span class="exp-chip">ABA / TEA / TDAH</span>
           <span class="exp-chip">Saúde mental</span>
           <span class="exp-chip">Wearable tech</span>
-          <span class="exp-chip">UX Writing</span>
-          <span class="exp-chip">Builder</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Crosara -->
-    <div class="exp-item reveal">
-      <div class="exp-meta">
-        <span class="exp-period">Mar 2024 - Abr 2026</span>
-        <span class="exp-company">Crosara Consultoria</span>
-      </div>
-      <div>
-        <h3 class="exp-role">Designer Gráfica / Strategic Communication</h3>
-        <p class="exp-subtitle">Comunicação visual estratégica para o agronegócio brasileiro</p>
-        <div class="exp-clients" aria-label="Empresas atendidas na Crosara">
-          <span class="exp-client mobile-hidden">ADAMA</span>
-          <span class="exp-client mobile-hidden">Agrária</span>
-          <span class="exp-client mobile-hidden">Agrex</span>
-          <span class="exp-client mobile-hidden">Agroadvance</span>
-          <span class="exp-client mobile-hidden">Andav</span>
-          <span class="exp-client">BASF</span>
-          <span class="exp-client">Bayer</span>
-          <span class="exp-client mobile-hidden">Belagrícola</span>
-          <span class="exp-client mobile-hidden">Cooperativa Holambra</span>
-          <span class="exp-client mobile-hidden">Coopercitrus</span>
-          <span class="exp-client mobile-hidden">Cooxupé</span>
-          <span class="exp-client">Corteva</span>
-          <span class="exp-client mobile-hidden">Daymsa</span>
-          <span class="exp-client mobile-hidden">J. Demito</span>
-          <span class="exp-client mobile-hidden">Koppert</span>
-          <span class="exp-client mobile-hidden">Kracht</span>
-          <span class="exp-client mobile-hidden">Lavoro</span>
-          <span class="exp-client mobile-hidden">Minasul</span>
-          <span class="exp-client mobile-hidden">Mosaic</span>
-          <span class="exp-client mobile-hidden">Ouro Fino</span>
-          <span class="exp-client mobile-hidden">Paiol</span>
-          <span class="exp-client mobile-hidden">Planfer</span>
-          <span class="exp-client mobile-hidden">Playbooks</span>
-          <span class="exp-client mobile-hidden">Prime Agro</span>
-          <span class="exp-client mobile-hidden">Risa</span>
-          <span class="exp-client mobile-hidden">Sumitomo</span>
-          <span class="exp-client mobile-hidden">Syngenta</span>
-          <span class="exp-client mobile-hidden">Volkswagen</span>
-        </div>
-        <ul class="exp-bullets">
-          <li>+60 apresentações executivas para <strong>Big 4 do agronegócio global</strong> (Bayer, BASF, Corteva, Syngenta) e 22 empresas líderes</li>
-          <li>Comunicação visual estratégica end-to-end para consultoria especializada em mercado agrícola</li>
-          <li>Tradução de complexidade técnica em narrativas visuais impactantes para reuniões C-level</li>
-        </ul>
-        <div class="exp-chips">
-          <span class="exp-chip">Apresentações executivas</span>
-          <span class="exp-chip">Design Gráfico</span>
-          <span class="exp-chip">Diagramação</span>
-          <span class="exp-chip">PowerPoint</span>
-          <span class="exp-chip">Storytelling C-level</span>
+          <span class="exp-chip">Narrativa interativa</span>
+          <span class="exp-chip">Full-Stack Development</span>
         </div>
       </div>
     </div>
@@ -991,6 +938,12 @@ img,video{max-width:100%;height:auto;}
 
   <div class="form-grid">
     <div>
+      <div class="section-label" style="margin-bottom:1.5rem;" aria-hidden="true">Formação</div>
+      <div class="cert-row"><span class="cert-name">Psicologia <span class="em-tag">EM BREVE</span></span></div>
+      <div class="cert-row"><span class="cert-name">Análise do Comportamento Aplicada (ABA) <span class="em-tag">EM CURSO</span></span></div>
+      <div class="cert-row"><span class="cert-name">Bacharelado em Design Gráfico — ESAMC</span></div>
+    </div>
+    <div>
       <div class="section-label" style="margin-bottom:1.5rem;" aria-hidden="true">Certificações</div>
       <div class="cert-row reveal"><span class="cert-name">Product Manager — Awari</span><span class="cert-year">2023</span></div>
       <div class="cert-row reveal"><span class="cert-name">Scrum Foundation Professional — CertiProf</span><span class="cert-year">2020</span></div>
@@ -1004,8 +957,8 @@ img,video{max-width:100%;height:auto;}
 <footer role="contentinfo">
   <span>© 2026 Jessica Block</span>
   <span>Uberlândia, MG · Brasil</span>
-  <span>Design · Produto · Tecnologia</span>
-  <span style="width:100%;text-align:center;font-size:9px;opacity:.5;margin-top:.25rem;">Todos os projetos apresentados são de autoria e propriedade exclusiva de Jessica Block. Protegidos pelos direitos autorais nos termos da Lei 9.610/98. A reprodução total ou parcial, sem autorização expressa, é proibida.</span>
+  <span>Product Design · Saúde Mental · Neurodivergência</span>
+  <span style="width:100%;text-align:center;font-size:9px;opacity:.5;margin-top:.25rem;">Todos os projetos apresentados são de concepção, design e desenvolvimento executados por Jessica Block. Desenvolvidos com IA como ferramenta central de aprendizado, prototipagem e coding.</span>
 </footer>
 
 <div class="sticky-bar" role="navigation" aria-label="Links rápidos">
@@ -1016,6 +969,10 @@ img,video{max-width:100%;height:auto;}
   <a href="https://wa.me/5534999441161" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
     <svg class="bar-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5z"/></svg>
     <span class="bar-label">WhatsApp</span>
+  </a>
+  <a href="https://github.com/jessblock" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+    <svg class="bar-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61 3.5 3.5 0 0 1 5.36-2.61c.67 1.21 1.1 2.91 1.1 4.48v2.7M7 11c1.5.5 3 1.15 4 2.5M7 11l.5-1.5M11 7l.5-1.5M7 11c-1 1-1.5 2.5-1 4M11 7c1 1 1.5 2.5 1 4"/></svg>
+    <span class="bar-label">GitHub</span>
   </a>
   <a href="https://linkedin.com/in/jessicatwblock" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
     <svg class="bar-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
