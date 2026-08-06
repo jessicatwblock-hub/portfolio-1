@@ -17,24 +17,24 @@ html{scroll-behavior:smooth;}
    bg #0a0a08  ↔  muted #b9b3a4 →  ~10.4:1 (AAA)
 */
 :root{
-  --bg:#0a0a08;
-  --bg2:#111110;
-  --surface:#1a1a17;
-  --surface-2:#22221e;
-  --border:rgba(255,255,255,0.10);
-  --border-md:rgba(255,255,255,0.20);
+  --bg:#0B2B3D;
+  --bg2:#0F3550;
+  --surface:#174463;
+  --surface-2:#205477;
+  --border:rgba(0,217,255,0.08);
+  --border-md:rgba(0,217,255,0.15);
   --text:#f2efe6;
   --muted:#b9b3a4;
-  --accent:#d4c39a;
-  --accent2:#a89970;
-  --nav-bg:rgba(10,10,8,0.94);
+  --accent:#00D9FF;
+  --accent2:#8B1538;
+  --nav-bg:rgba(11,43,61,0.94);
   --mono:'DM Mono',monospace;
   --sans:'DM Sans',sans-serif;
   --serif:'Playfair Display',serif;
   --r-sm:6px;--r-md:12px;--r-lg:20px;
 }
 
-body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:300;line-height:1.7;font-size:16px;overflow-x:hidden;padding-bottom:60px;-webkit-font-smoothing:antialiased;}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:300;line-height:1.8;font-size:16px;overflow-x:hidden;padding-bottom:60px;-webkit-font-smoothing:antialiased;}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px;}
 .skip-link{position:absolute;top:-100%;left:1rem;background:var(--accent);color:var(--bg);padding:.5rem 1rem;font-family:var(--mono);font-size:12px;border-radius:var(--r-sm);text-decoration:none;z-index:9999;transition:top .2s;}
 .skip-link:focus{top:1rem;}
@@ -59,8 +59,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content
 .hero-actions{margin-top:2.5rem;display:flex;gap:12px;flex-wrap:wrap;opacity:0;animation:fadeUp .7s .8s ease forwards;}
 .hero-btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;padding:11px 22px;border-radius:var(--r-sm);transition:background .2s,color .2s,border-color .2s,transform .2s;border:1px solid var(--border-md);color:var(--text);background:transparent;}
 .hero-btn:hover{border-color:var(--accent);color:var(--accent);}
-.hero-btn.primary{background:var(--accent);color:var(--bg);border-color:var(--accent);font-weight:500;}
-.hero-btn.primary:hover{background:var(--text);border-color:var(--text);color:var(--bg);}
+.hero-btn.primary{background:#ffffff;color:var(--accent2);border-color:var(--accent2);font-weight:500;}
+.hero-btn.primary:hover{background:var(--accent2);border-color:var(--accent2);color:#ffffff;}
 .hero-badges{margin-top:2.75rem;display:flex;gap:8px;flex-wrap:wrap;opacity:0;animation:fadeUp .7s 1s ease forwards;}
 .hero-badge{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border-md);padding:5px 12px;border-radius:20px;}
 
@@ -92,8 +92,8 @@ section{scroll-margin-top:64px;padding:6rem 3rem;border-bottom:1px solid var(--b
 /* GALERIA HORIZONTAL — scroll snap, sem barras feias */
 .projects-gallery{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:1.5rem;
+  grid-template-columns:repeat(2,1fr);
+  gap:2rem;
   padding:1.5rem 0 2rem;
 }
 
@@ -248,7 +248,7 @@ section{scroll-margin-top:64px;padding:6rem 3rem;border-bottom:1px solid var(--b
 
 /* EXPERIENCE — espaços generosos, divisórias, chips */
 .exp-list{display:flex;flex-direction:column;margin-top:3rem;}
-.exp-item{display:grid;grid-template-columns:200px 1fr;gap:3rem;padding:2.75rem 0 3rem;border-bottom:1px solid var(--border);align-items:start;}
+.exp-item{display:grid;grid-template-columns:260px 1fr;gap:3rem;padding:2.75rem 0 3rem;border-bottom:1px solid var(--border);align-items:start;}
 .exp-item:first-child{border-top:1px solid var(--border);}
 .exp-item:last-child{border-bottom:none;}
 .exp-meta{display:flex;flex-direction:column;gap:.4rem;}
@@ -265,7 +265,7 @@ section{scroll-margin-top:64px;padding:6rem 3rem;border-bottom:1px solid var(--b
 .exp-bullets li a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent2);transition:color .2s,border-color .2s;}
 .exp-bullets li a:hover{color:var(--text);border-color:var(--text);}
 .exp-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:2rem;}
-.exp-chip{font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--accent);background:rgba(212,195,154,.07);border:1px solid rgba(212,195,154,.22);padding:5px 11px;border-radius:20px;}
+.exp-chip{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--accent);background:rgba(0,217,255,.07);border:1px solid rgba(0,217,255,.22);padding:7px 13px;border-radius:20px;}
 
 /* FORMACAO + CERTIFICACOES */
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin-top:5rem;}
@@ -319,16 +319,23 @@ img,video{max-width:100%;height:auto;}
   .section-title{font-size:clamp(1.6rem,6vw,2.4rem);}
   .section-label{font-size:9px;}
   .about-text p{font-size:14px;}
-  /* Mobile: scroll horizontal */
+  /* Tablet: 2 colunas → 1 coluna */
   .projects-gallery{
-    display:flex;flex-direction:row;
-    overflow-x:auto;overflow-y:hidden;
-    scroll-snap-type:x mandatory;
-    -webkit-overflow-scrolling:touch;
-    scrollbar-width:none;
-    padding:0 1.25rem 1.5rem;
-    margin:0 -1.25rem;
-    gap:1.25rem;
+    grid-template-columns:1fr;
+    gap:1.5rem;
+  }
+  /* Mobile: scroll horizontal */
+  @media(max-width:600px){
+    .projects-gallery{
+      display:flex;flex-direction:row;
+      overflow-x:auto;overflow-y:hidden;
+      scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling:touch;
+      scrollbar-width:none;
+      padding:0 1.25rem 1.5rem;
+      margin:0 -1.25rem;
+      gap:1.25rem;
+    }
   }
   .projects-gallery::-webkit-scrollbar{display:none;}
   /* Anula nth-child do grid no mobile */
@@ -346,7 +353,7 @@ img,video{max-width:100%;height:auto;}
   .number-value{font-size:clamp(2rem,7vw,2.6rem);}
   .number-label{font-size:9px;}
   .exp-list{margin-top:2rem;}
-  .exp-item{grid-template-columns:1fr;gap:1rem;padding:2.25rem 0 2.5rem;}
+  .exp-item{grid-template-columns:120px 1fr;gap:1.5rem;padding:2.25rem 0 2.5rem;}
   .exp-role{font-size:1.05rem;}
   /* Em mobile: empresas escondidas + tags quebram naturalmente */
   .exp-client.mobile-hidden{display:none;}
@@ -372,7 +379,7 @@ img,video{max-width:100%;height:auto;}
 }
 
 /* Badge Em captação */
-.badge-cap{background:rgba(201,169,110,.12);color:#c9a96e;border:1px solid rgba(201,169,110,.35);}
+.badge-cap{background:rgba(139,21,56,.12);color:var(--accent2);border:1px solid rgba(139,21,56,.3);}
 
 
 
@@ -412,7 +419,7 @@ img,video{max-width:100%;height:auto;}
     </div>
     <div class="hero-badges">
       <span class="hero-badge">Uberlândia, MG · Brasil</span>
-      <span class="hero-badge">Open to remote</span>
+      <span class="hero-badge">Open to remote roles</span>
     </div>
   </div>
 </header>
@@ -482,7 +489,7 @@ img,video{max-width:100%;height:auto;}
       <p class="project-desc">Plataforma completa de gestão de obras: controle de ponto com geolocalização, escalas semanais, livro diário, chat interno, relatórios em PDF e assistente com IA. Arquitetura multi-tenant white-label com quatro perfis de acesso distintos: super admin, gestor, encarregado e trabalhador.</p>
       <div class="project-tags"><span class="tag">SaaS B2B</span><span class="tag">Multi-tenant</span><span class="tag">IA</span><span class="tag">PWA</span><span class="tag">Construção Civil</span></div>
       <a href="https://appobracerta.com" target="_blank" rel="noopener noreferrer" class="project-cta">Acessar app ↗</a>
-      <p class="project-copyright">© Jessica Block — todos os direitos reservados.</p>
+      
     </div>
     <div class="project-mockup" aria-hidden="true">
       <div class="mockup-wrap">
@@ -518,7 +525,7 @@ img,video{max-width:100%;height:auto;}
       <p class="project-desc">Triagem educacional para reconhecer padrões de TEA e TDAH em quatro perspectivas: autopercepção, olhar do parceiro, avaliação combinada e versão para pais de crianças de 4 a 12 anos. Baseado nos critérios do DSM-5. Gratuito, sem cadastro e sem coleta de dados.</p>
       <div class="project-tags"><span class="tag">TEA / TDAH</span><span class="tag">DSM-5</span><span class="tag">Acessibilidade</span><span class="tag">Saúde mental</span><span class="tag">Sem cadastro</span></div>
       <a href="https://jessblock.github.io/neurolens/" target="_blank" rel="noopener noreferrer" class="project-cta">Acessar app ↗</a>
-      <p class="project-copyright">© Jessica Block — todos os direitos reservados.</p>
+      
     </div>
     <div class="project-mockup" aria-hidden="true">
       <div class="mockup-wrap">
@@ -554,7 +561,7 @@ img,video{max-width:100%;height:auto;}
       <p class="project-desc">Narrativa interativa com mecânicas imersivas de jogo: ficção científica romântica em que o leitor sintoniza frequências, atravessa cenários e acompanha a história de Lia e Bento até o ponto de convergência. Trilha sonora, ilustrações originais e ritmo próprio em cada capítulo.</p>
       <div class="project-tags"><span class="tag">Narrativa interativa</span><span class="tag">Game design</span><span class="tag">Ficção científica</span><span class="tag">Trilha original</span></div>
       <a href="https://jessblock.github.io/convergir/" target="_blank" rel="noopener noreferrer" class="project-cta">Jogar ↗</a>
-      <p class="project-copyright">© Jessica Block — todos os direitos reservados.</p>
+      
     </div>
     <div class="project-mockup" aria-hidden="true">
       <div class="mockup-wrap">
@@ -591,7 +598,7 @@ img,video{max-width:100%;height:auto;}
       <p class="project-desc">Experiência de leitura oracular gerada por IA: o usuário responde perguntas e recebe uma interpretação simbólica personalizada. Entretenimento e introspecção leve, sem nenhuma pretensão diagnóstica ou terapêutica.</p>
       <div class="project-tags"><span class="tag">IA generativa</span><span class="tag">Misticismo</span><span class="tag">Entretenimento</span></div>
       <a href="https://oraculopessoal.vercel.app/" target="_blank" rel="noopener noreferrer" class="project-cta">Acessar app ↗</a>
-      <p class="project-copyright">© Jessica Block — todos os direitos reservados.</p>
+      
     </div>
     <div class="project-mockup" aria-hidden="true">
       <div class="mockup-wrap">
@@ -628,7 +635,7 @@ img,video{max-width:100%;height:auto;}
       <p class="project-desc">App de acompanhamento terapêutico para adolescentes neurodivergentes e suas famílias: diário emocional, bateria social com cronômetro de interação, registro de crise, exercícios guiados de regulação, conquistas e painel compartilhado com a família e AT. Desenvolvido com foco em TDAH e TEA.</p>
       <div class="project-tags"><span class="tag">Saúde mental</span><span class="tag">TEA / TDAH</span><span class="tag">Família</span><span class="tag">Regulação emocional</span><span class="tag">PWA</span></div>
       <a href="https://biaintervapp-7vo5jplf.manus.space/" target="_blank" rel="noopener noreferrer" class="project-cta">Acessar app ↗</a>
-      <p class="project-copyright">© Jessica Block — todos os direitos reservados.</p>
+      
     </div>
     <div class="project-mockup" aria-hidden="true">
       <div class="mockup-wrap">
@@ -664,7 +671,7 @@ img,video{max-width:100%;height:auto;}
       <p class="project-desc">App de gamificação de rotina para crianças neurodivergentes: sistema de missões diárias, laboratório criativo, conquistas, XP e progressão por ranking. Painel de comando para o responsável configurar missões, aprovar entregas e acompanhar o progresso. Desenvolvido para tornar a rotina estruturada em aventura.</p>
       <div class="project-tags"><span class="tag">Gamificação</span><span class="tag">TEA / TDAH</span><span class="tag">Rotina</span><span class="tag">Criança</span><span class="tag">PWA</span></div>
       <a href="https://horizonte-tau.vercel.app/" target="_blank" rel="noopener noreferrer" class="project-cta">Acessar app ↗</a>
-      <p class="project-copyright">© Jessica Block — todos os direitos reservados.</p>
+      
     </div>
     <div class="project-mockup" aria-hidden="true">
       <div class="mockup-wrap">
@@ -701,7 +708,7 @@ img,video{max-width:100%;height:auto;}
       <p class="project-desc">Marca de roupas para pessoas com alta sensibilidade sensorial, em fase de captação de investimentos. Duplo capuz bloqueador de luz, almofadas acústicas quilted, fechamento magnético silencioso, mangas extra-longas com thumbholes e costura flatlock. Proteção sensorial real com estética de luxo. Modal 70% + Microfibra 30%.</p>
       <div class="project-tags"><span class="tag">Moda sensorial</span><span class="tag">Wearable tech</span><span class="tag">Inclusão</span><span class="tag">TEA / TDAH</span><span class="tag">Investimento</span></div>
       <a href="https://wa.me/5534999441161?text=Ol%C3%A1%2C+tenho+interesse+em+saber+mais+sobre+o+SensoryShield" class="project-cta" target="_blank" rel="noopener">Falar sobre investimento ↗</a>
-      <p class="project-copyright">© Jessica Block — todos os direitos reservados.</p>
+      
     </div>
     <div class="project-mockup" aria-hidden="true">
       <div class="mockup-wrap">
@@ -736,7 +743,7 @@ img,video{max-width:100%;height:auto;}
       <p class="project-desc">Álbum conceitual em formato web de seis faixas explorando amor, vulnerabilidade e escolha. Letras originais em inglês e português, player de áudio imersivo, identidade visual autoral e narrativa completa da primeira cena ao ato final. Concebido, escrito e desenvolvido por J.BLK.</p>
       <div class="project-tags"><span class="tag">Escrita criativa</span><span class="tag">Design editorial</span><span class="tag">Narrativa</span><span class="tag">Identidade visual</span><span class="tag">Projeto autoral</span></div>
       <a href="https://faultlinealb-sttgbqcx.manus.space/" class="project-cta" target="_blank" rel="noopener">Acessar álbum ↗</a>
-      <p class="project-copyright">© Jessica Block — todos os direitos reservados.</p>
+      
     </div>
     <div class="project-mockup" aria-hidden="true">
       <div class="mockup-wrap">
